@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { IdeaCategory, IdeaStage, Idea } from '@/types';
 import { fetchIdeas } from '@/lib/api/ideas';
 import { IdeaCard } from '@/components/idea/IdeaCard';
@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { useSearchParams } from 'next/navigation';
 
-export default function BrowsePage() {
+function BrowseContent() {
   const searchParams = useSearchParams();
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -100,6 +100,20 @@ export default function BrowsePage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function BrowsePage() {
+  return (
+    <Suspense fallback={
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center py-12">
+          <p className="text-gray-600">Carregando ideias...</p>
+        </div>
+      </div>
+    }>
+      <BrowseContent />
+    </Suspense>
   );
 }
 
