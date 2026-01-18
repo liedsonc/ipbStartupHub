@@ -138,3 +138,16 @@ export interface IdeaFilters {
   sortBy?: 'newest' | 'mostInterest';
 }
 
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: PersonRole;
+  affiliation?: string;
+  avatarUrl?: string;
+  bio?: string;
+  emailVerified: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+

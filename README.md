@@ -1,6 +1,6 @@
-# StartupHub Prototype
+# Startup Hub IPB
 
-A frontend-only prototype for a university startup hub platform. Built with Next.js, TypeScript, and Tailwind CSS.
+A university startup hub platform connecting students, mentors, and investors. Built with Next.js, TypeScript, and Tailwind CSS.
 
 ## Features
 
@@ -60,10 +60,11 @@ src/
 
 ## Key Features
 
-### No Backend Required
-- All data is stored in-memory using mock data
-- Easy to swap mock data for real APIs via `lib/api/` layer
-- No authentication or database needed
+### Full-Stack Platform
+- PostgreSQL database with Prisma ORM
+- NextAuth.js authentication with role-based access control
+- RESTful API routes for data management
+- Server and client components for optimal performance
 
 ### Production-Quality Components
 - Fully typed with TypeScript
@@ -101,10 +102,10 @@ Update the functions in `src/lib/api/` to call real API endpoints instead of moc
 
 ## Notes
 
-- This is a **prototype** for validation purposes
-- Data is **not persisted** (resets on page refresh)
-- All contact information is **simulated**
-- No authentication or user accounts
+- Full authentication system with user roles and permissions
+- Data is persisted in PostgreSQL database
+- Secure password hashing with bcrypt
+- Role-based access control (RBAC) for different user types
 
 ## License
 

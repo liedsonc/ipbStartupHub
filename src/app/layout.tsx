@@ -3,6 +3,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { ToastProvider } from '@/lib/hooks/useToast';
 import { InboxProvider } from '@/lib/hooks/useInbox';
+import { SessionProvider } from '@/components/auth/SessionProvider';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
@@ -18,15 +19,17 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className="min-h-screen flex flex-col bg-gray-50">
-        <ToastProvider>
-          <InboxProvider>
-            <Header />
-            <main className="flex-1">
-              {children}
-            </main>
-            <Footer />
-          </InboxProvider>
-        </ToastProvider>
+        <SessionProvider>
+          <ToastProvider>
+            <InboxProvider>
+              <Header />
+              <main className="flex-1">
+                {children}
+              </main>
+              <Footer />
+            </InboxProvider>
+          </ToastProvider>
+        </SessionProvider>
       </body>
     </html>
   );

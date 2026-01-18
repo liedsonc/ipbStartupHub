@@ -1,8 +1,11 @@
 import { notFound } from 'next/navigation';
-import { fetchIdeaWithInterests } from '@/lib/api/ideas';
+import { fetchIdeaWithInterestsServer } from '@/lib/api/server-ideas';
 import { IdeaDetail } from '@/components/idea/IdeaDetail';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
+import { getSession } from '@/lib/auth/session';
+
+export const dynamic = 'force-dynamic'
 
 interface IdeaDetailPageProps {
   params: {
@@ -11,7 +14,8 @@ interface IdeaDetailPageProps {
 }
 
 export default async function IdeaDetailPage({ params }: IdeaDetailPageProps) {
-  const idea = await fetchIdeaWithInterests(params.id);
+  const idea = await fetchIdeaWithInterestsServer(params.id);
+  const session = await getSession();
   
   if (!idea) {
     notFound();
@@ -25,7 +29,7 @@ export default async function IdeaDetailPage({ params }: IdeaDetailPageProps) {
         </Button>
       </Link>
       
-      <IdeaDetail idea={idea} />
+      <IdeaDetail idea={idea} currentUserId={session?.user?.id} />
     </div>
   );
 }

@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { IdeaWithInterests, InterestType } from '@/types';
 import { Card, CardBody, Badge, Button } from '../ui';
 import { InterestButton } from './InterestButton';
@@ -9,7 +11,8 @@ import { IdeaOpportunities } from './IdeaOpportunities';
 import { formatDate } from '@/lib/utils/format';
 
 interface IdeaDetailProps {
-  idea: IdeaWithInterests;
+  idea: IdeaWithInterests & { authorId: string };
+  currentUserId?: string;
 }
 
 const categoryColors: Record<string, 'default' | 'primary' | 'success' | 'warning'> = {
@@ -37,9 +40,13 @@ const stageLabels: Record<string, string> = {
   SeekingFunding: 'Buscando Financiamento',
 };
 
-export function IdeaDetail({ idea: initialIdea }: IdeaDetailProps) {
+export function IdeaDetail({ idea: initialIdea, currentUserId }: IdeaDetailProps) {
+  const router = useRouter();
+  const { data: session } = useSession();
   const [idea, setIdea] = useState(initialIdea);
   const [refreshKey, setRefreshKey] = useState(0);
+  
+  const isOwner = idea.authorId ? session?.user?.id === idea.authorId : false;
   
   useEffect(() => {
     const fetchUpdatedIdea = async () => {
@@ -66,13 +73,24 @@ export function IdeaDetail({ idea: initialIdea }: IdeaDetailProps) {
   return (
     <div className="space-y-6">
       <div>
-        <div className="flex flex-wrap gap-2 mb-4">
-          <Badge variant={categoryColors[idea.category] || 'default'}>
-            {categoryLabels[idea.category] || idea.category}
-          </Badge>
-          <Badge variant="default">
-            {stageLabels[idea.stage] || idea.stage}
-          </Badge>
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex flex-wrap gap-2">
+            <Badge variant={categoryColors[idea.category] || 'default'}>
+              {categoryLabels[idea.category] || idea.category}
+            </Badge>
+            <Badge variant="default">
+              {stageLabels[idea.stage] || idea.stage}
+            </Badge>
+          </div>
+          {isOwner && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => router.push(`/idea/${idea.id}/edit`)}
+            >
+              Editar
+            </Button>
+          )}
         </div>
         
         <h1 className="text-3xl font-bold text-gray-900 mb-4">{idea.title}</h1>
@@ -163,9 +181,6 @@ export function IdeaDetail({ idea: initialIdea }: IdeaDetailProps) {
           <p className="text-gray-600">
             Entre em contato com o autor da ideia:{' '}
             <span className="font-mono text-sm">{idea.contactEmail}</span>
-          </p>
-          <p className="text-xs text-gray-500 mt-2">
-            Nota: Este é um protótipo. As informações de contato são simuladas.
           </p>
         </CardBody>
       </Card>

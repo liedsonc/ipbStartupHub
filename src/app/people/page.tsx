@@ -1,4 +1,4 @@
-import { fetchPeople } from '@/lib/api/people';
+import { fetchPeopleServer } from '@/lib/api/server-people';
 import { PersonRole, InterestType } from '@/types';
 import { Card, CardBody, Badge } from '@/components/ui';
 import { EmptyState } from '@/components/shared/EmptyState';
@@ -29,8 +29,10 @@ const interestTypeLabels: Record<InterestType, string> = {
   [InterestType.Mentor]: 'Quer mentorar',
 };
 
+export const dynamic = 'force-dynamic'
+
 export default async function PeoplePage() {
-  const people = await fetchPeople();
+  const people = await fetchPeopleServer();
   
   const groupedByRole = people.reduce((acc, person) => {
     if (!acc[person.role]) {

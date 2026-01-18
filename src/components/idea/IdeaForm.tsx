@@ -2,9 +2,9 @@
 
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { IdeaCategory, IdeaStage } from '@/types';
 import { Input, Select, Button } from '../ui';
-import { createIdea } from '@/lib/api/ideas';
 import { useToast } from '@/lib/hooks/useToast';
 
 const categories = Object.values(IdeaCategory);
@@ -33,27 +33,39 @@ interface FormData {
   category: IdeaCategory;
   stage: IdeaStage;
   contactEmail: string;
-  authorName: string;
-  authorRole: string;
   tags: string;
 }
 
-export function IdeaForm() {
+interface IdeaFormProps {
+  ideaId?: string;
+  initialData?: {
+    title: string;
+    shortDescription: string;
+    description: string;
+    category: IdeaCategory;
+    stage: IdeaStage;
+    contactEmail: string;
+    tags: string[];
+  };
+}
+
+export function IdeaForm({ ideaId, initialData }: IdeaFormProps = {}) {
   const router = useRouter();
-  const { showSuccess } = useToast();
+  const { data: session } = useSession();
+  const { showSuccess, showError } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   
+  const isEditMode = !!ideaId && !!initialData;
+  
   const [formData, setFormData] = useState<FormData>({
-    title: '',
-    shortDescription: '',
-    description: '',
-    category: IdeaCategory.Tech,
-    stage: IdeaStage.Idea,
-    contactEmail: '',
-    authorName: '',
-    authorRole: '',
-    tags: '',
+    title: initialData?.title || '',
+    shortDescription: initialData?.shortDescription || '',
+    description: initialData?.description || '',
+    category: initialData?.category || IdeaCategory.Tech,
+    stage: initialData?.stage || IdeaStage.Idea,
+    contactEmail: initialData?.contactEmail || session?.user?.email || '',
+    tags: initialData?.tags?.join(', ') || '',
   });
   
   const validate = (): boolean => {
@@ -77,20 +89,17 @@ export function IdeaForm() {
       newErrors.contactEmail = 'Formato de email inválido';
     }
     
-    if (!formData.authorName.trim()) {
-      newErrors.authorName = 'Seu nome é obrigatório';
-    }
-    
-    if (!formData.authorRole.trim()) {
-      newErrors.authorRole = 'Seu papel é obrigatório';
-    }
-    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
   
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    
+    if (!session) {
+      router.push('/login');
+      return;
+    }
     
     if (!validate()) {
       return;
@@ -104,28 +113,42 @@ export function IdeaForm() {
         .map(tag => tag.trim())
         .filter(tag => tag.length > 0);
       
-      const newIdea = await createIdea({
-        title: formData.title.trim(),
-        shortDescription: formData.shortDescription.trim(),
-        description: formData.description.trim(),
-        category: formData.category,
-        stage: formData.stage,
-        contactEmail: formData.contactEmail.trim(),
-        authorName: formData.authorName.trim(),
-        authorRole: formData.authorRole.trim(),
-        tags: tagsArray,
+      const url = isEditMode ? `/api/ideas/${ideaId}` : '/api/ideas';
+      const method = isEditMode ? 'PUT' : 'POST';
+      
+      const response = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: formData.title.trim(),
+          shortDescription: formData.shortDescription.trim(),
+          description: formData.description.trim(),
+          category: formData.category,
+          stage: formData.stage,
+          contactEmail: formData.contactEmail.trim(),
+          tags: tagsArray,
+        })
       });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || (isEditMode ? 'Erro ao atualizar ideia' : 'Erro ao criar ideia'));
+      }
       
-      showSuccess('Ideia criada com sucesso! Ela aparecerá no feed.');
-      
-      window.dispatchEvent(new CustomEvent('ideaCreated'));
+      showSuccess(isEditMode ? 'Ideia atualizada com sucesso!' : 'Ideia criada com sucesso! Ela aparecerá no feed.');
       
       setTimeout(() => {
-        router.push('/browse');
+        if (isEditMode) {
+          router.push(`/idea/${ideaId}`);
+        } else {
+          router.push('/browse');
+        }
+        router.refresh();
       }, 500);
-    } catch (error) {
-      console.error('Failed to create idea:', error);
-      showSuccess('Falha ao enviar ideia. Tente novamente.');
+    } catch (error: any) {
+      console.error(`Failed to ${isEditMode ? 'update' : 'create'} idea:`, error);
+      showError(error.message || `Falha ao ${isEditMode ? 'atualizar' : 'enviar'} ideia. Tente novamente.`);
     } finally {
       setIsSubmitting(false);
     }
@@ -133,11 +156,6 @@ export function IdeaForm() {
   
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="bg-violet-50 border border-violet-200 rounded-lg p-4 mb-6">
-        <p className="text-sm text-violet-800">
-          <strong>Nota:</strong> Este é um protótipo. Sua ideia será adicionada ao estado local, mas não será salva permanentemente.
-        </p>
-      </div>
       
       <Input
         label="Título da Ideia *"
@@ -207,26 +225,6 @@ export function IdeaForm() {
         </Select>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Input
-          label="Seu Nome *"
-          value={formData.authorName}
-          onChange={(e) => setFormData({ ...formData, authorName: e.target.value })}
-          error={errors.authorName}
-          placeholder="João Silva"
-          required
-        />
-        
-        <Input
-          label="Seu Papel *"
-          value={formData.authorRole}
-          onChange={(e) => setFormData({ ...formData, authorRole: e.target.value })}
-          error={errors.authorRole}
-          placeholder="ex: Estudante de Ciência da Computação"
-          required
-        />
-      </div>
-      
       <Input
         label="Email de Contato *"
         type="email"
@@ -251,7 +249,7 @@ export function IdeaForm() {
           disabled={isSubmitting}
           className="flex-1"
         >
-          {isSubmitting ? 'Enviando...' : 'Enviar Ideia'}
+          {isSubmitting ? (isEditMode ? 'Atualizando...' : 'Enviando...') : (isEditMode ? 'Atualizar Ideia' : 'Enviar Ideia')}
         </Button>
         <Button
           type="button"

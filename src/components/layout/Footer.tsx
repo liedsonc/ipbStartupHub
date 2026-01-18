@@ -35,18 +35,15 @@ export function Footer() {
           
           <div>
             <h4 className="text-sm font-semibold text-gray-900 mb-4">Sobre</h4>
-            <p className="text-xs text-gray-500 mb-2">
-              Este é um protótipo apenas para fins de validação.
-            </p>
             <p className="text-xs text-gray-500">
-              Nenhum dado é armazenado permanentemente.
+              Conectando ideias com pessoas para construir o futuro.
             </p>
           </div>
         </div>
         
         <div className="mt-8 pt-8 border-t border-gray-200">
           <p className="text-xs text-center text-gray-500">
-            © 2024 Startup Hub IPB Protótipo. Todos os direitos reservados.
+            © 2024 Startup Hub IPB. Todos os direitos reservados.
           </p>
         </div>
       </div>

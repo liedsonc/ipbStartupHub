@@ -31,41 +31,24 @@ export default function AboutPage() {
         
         <Card>
           <CardBody>
-            <h2 className="text-xl font-semibold text-gray-900 mb-3">Aviso sobre Protótipo</h2>
-            <p className="text-gray-700 mb-3">
-              Esta é uma versão protótipo do Startup Hub IPB criada para fins de validação. 
-              A plataforma foi projetada para demonstrar fluxos de usuário e proposta de valor para 
-              estudantes, professores e escritórios de inovação.
-            </p>
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-              <p className="text-sm text-yellow-800">
-                <strong>Importante:</strong> Este é um protótipo. Nenhum dado é armazenado permanentemente. 
-                Todas as ideias, interesses e perfis são simulados apenas para fins de demonstração.
-              </p>
-            </div>
-          </CardBody>
-        </Card>
-        
-        <Card>
-          <CardBody>
             <h2 className="text-xl font-semibold text-gray-900 mb-3">Perguntas Frequentes</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="font-semibold text-gray-900 mb-1">Isso é real?</h3>
-                <p className="text-sm text-gray-600">
-                  Este é um protótipo para validação. As ideias não são armazenadas permanentemente e serão resetadas quando você atualizar a página.
-                </p>
-              </div>
-              <div>
                 <h3 className="font-semibold text-gray-900 mb-1">Como entro em contato com alguém?</h3>
                 <p className="text-sm text-gray-600">
-                  As informações de contato mostradas nas ideias são simuladas. Em uma versão real, você poderia entrar em contato diretamente com os autores das ideias.
+                  Você pode entrar em contato diretamente com os autores das ideias através do email de contato fornecido em cada ideia.
                 </p>
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 mb-1">O que acontece com minha ideia?</h3>
                 <p className="text-sm text-gray-600">
-                  Ideias enviadas neste protótipo são adicionadas apenas ao estado local. Elas não serão salvas permanentemente.
+                  Suas ideias são armazenadas na plataforma e ficam visíveis para outros membros da comunidade. Você pode gerenciar suas ideias através do seu perfil.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-1">Como posso colaborar com uma ideia?</h3>
+                <p className="text-sm text-gray-600">
+                  Você pode expressar interesse em colaborar, financiar ou mentorar uma ideia através dos botões disponíveis na página de detalhes de cada ideia.
                 </p>
               </div>
             </div>

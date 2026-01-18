@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Card, CardBody } from '@/components/ui/Card';
-import { fetchIdeas } from '@/lib/api/ideas';
+import { fetchIdeasServer } from '@/lib/api/server-ideas';
 import { IdeaCard } from '@/components/idea/IdeaCard';
 
+export const dynamic = 'force-dynamic'
+
 export default async function HomePage() {
-  const featuredIdeas = await fetchIdeas({ sortBy: 'mostInterest' });
+  const featuredIdeas = await fetchIdeasServer({ sortBy: 'mostInterest' });
   const recentIdeas = featuredIdeas.slice(0, 6);
   
   return (

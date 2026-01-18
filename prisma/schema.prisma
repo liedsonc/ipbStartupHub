@@ -1,0 +1,220 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  Student
+  Alumni
+  Professor
+  Mentor
+  Investor
+  External
+  Admin
+}
+
+enum IdeaCategory {
+  Tech
+  Healthcare
+  Sustainability
+  SocialImpact
+  Education
+  Other
+}
+
+enum IdeaStage {
+  Idea
+  EarlyDevelopment
+  Prototype
+  SeekingFunding
+}
+
+enum IdeaStatus {
+  draft
+  published
+  archived
+}
+
+enum InterestType {
+  Collaborate
+  Fund
+  Explore
+  Mentor
+}
+
+enum InterestStatus {
+  active
+  withdrawn
+}
+
+enum FundingStatus {
+  Open
+  InDiscussion
+  Closed
+  Funded
+}
+
+enum NotificationType {
+  interest
+  funding
+  comment
+  collaboration
+  system
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email          String    @unique
+  passwordHash  String    @map("password_hash")
+  name          String
+  role          Role
+  affiliation   String?
+  avatarUrl     String?   @map("avatar_url")
+  bio           String?
+  emailVerified Boolean   @default(false) @map("email_verified")
+  profileComplete Boolean @default(false) @map("profile_complete")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  lastLoginAt   DateTime? @map("last_login_at")
+  deletedAt     DateTime? @map("deleted_at")
+
+  ideas            Idea[]
+  interestSignals  InterestSignal[]
+  fundingInvestors FundingInvestor[]
+  notifications    Notification[]
+  profile          UserProfile?
+
+  @@index([email])
+  @@index([role])
+  @@map("users")
+}
+
+model UserProfile {
+  id         String   @id @default(uuid())
+  userId     String   @unique @map("user_id")
+  skills     String[]
+  experience Json?
+  socialLinks Json?   @map("social_links")
+  preferences Json?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_profiles")
+}
+
+model Idea {
+  id              String          @id @default(uuid())
+  userId          String          @map("user_id")
+  title           String
+  description     String
+  shortDescription String?       @map("short_description")
+  category        IdeaCategory
+  stage           IdeaStage
+  contactEmail    String?         @map("contact_email")
+  status          IdeaStatus      @default(draft)
+  createdAt       DateTime        @default(now()) @map("created_at")
+  updatedAt       DateTime        @updatedAt @map("updated_at")
+  deletedAt       DateTime?       @map("deleted_at")
+
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tags              IdeaTag[]
+  interestSignals   InterestSignal[]
+  fundingOpportunities FundingOpportunity[]
+  openOpportunities Json?             @map("open_opportunities")
+
+  @@index([category])
+  @@index([stage])
+  @@index([status])
+  @@index([userId])
+  @@map("ideas")
+}
+
+model IdeaTag {
+  id      String @id @default(uuid())
+  ideaId  String @map("idea_id")
+  tag     String
+
+  idea Idea @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+
+  @@unique([ideaId, tag])
+  @@index([ideaId])
+  @@map("idea_tags")
+}
+
+model InterestSignal {
+  id          String         @id @default(uuid())
+  ideaId      String         @map("idea_id")
+  userId      String         @map("user_id")
+  interestType InterestType  @map("interest_type")
+  message     String?
+  status      InterestStatus @default(active)
+  createdAt   DateTime       @default(now()) @map("created_at")
+  updatedAt   DateTime       @updatedAt @map("updated_at")
+
+  idea Idea @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([ideaId, userId])
+  @@index([ideaId])
+  @@index([userId])
+  @@index([interestType])
+  @@map("interest_signals")
+}
+
+model FundingOpportunity {
+  id        String         @id @default(uuid())
+  ideaId    String         @map("idea_id")
+  amount    Decimal?
+  currency  String         @default("USD")
+  stage     String?
+  status    FundingStatus
+  terms     String?
+  deadline  DateTime?
+  createdAt DateTime       @default(now()) @map("created_at")
+  updatedAt DateTime       @updatedAt @map("updated_at")
+
+  idea      Idea              @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  investors FundingInvestor[]
+
+  @@index([ideaId])
+  @@index([status])
+  @@map("funding_opportunities")
+}
+
+model FundingInvestor {
+  id                String   @id @default(uuid())
+  fundingOpportunityId String @map("funding_opportunity_id")
+  userId            String   @map("user_id")
+  commitmentAmount  Decimal? @map("commitment_amount")
+  status            String   @default("interested")
+  createdAt         DateTime @default(now()) @map("created_at")
+
+  fundingOpportunity FundingOpportunity @relation(fields: [fundingOpportunityId], references: [id], onDelete: Cascade)
+  user                User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([fundingOpportunityId, userId])
+  @@index([fundingOpportunityId])
+  @@index([userId])
+  @@map("funding_investors")
+}
+
+model Notification {
+  id         String          @id @default(uuid())
+  userId     String          @map("user_id")
+  type       NotificationType
+  entityType String?         @map("entity_type")
+  entityId   String?         @map("entity_id")
+  message    String
+  read       Boolean         @default(false)
+  createdAt  DateTime        @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([userId, read])
+  @@map("notifications")
+}
+

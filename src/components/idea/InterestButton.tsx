@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { InterestType, Idea } from '@/types';
 import { Button } from '../ui/Button';
-import { createInterest } from '@/lib/api/ideas';
 import { useToast } from '@/lib/hooks/useToast';
-import { useInbox } from '@/lib/hooks/useInbox';
 import { Modal } from '../ui/Modal';
 
 interface InterestButtonProps {
@@ -15,11 +15,8 @@ interface InterestButtonProps {
   label: string;
   variant?: 'primary' | 'secondary' | 'outline';
   onInterestAdded?: () => void;
+  hasInterested?: boolean;
 }
-
-const simulatedPersonId = 'person-001';
-const simulatedPersonName = 'Você';
-const simulatedPersonRole = 'Estudante';
 
 export function InterestButton({
   ideaId,
@@ -28,37 +25,64 @@ export function InterestButton({
   label,
   variant = 'primary',
   onInterestAdded,
+  hasInterested: initialHasInterested = false,
 }: InterestButtonProps) {
+  const { data: session } = useSession();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [hasInterested, setHasInterested] = useState(false);
+  const [hasInterested, setHasInterested] = useState(initialHasInterested);
   const [showConfirm, setShowConfirm] = useState(false);
-  const { showSuccess } = useToast();
-  const { addRequest } = useInbox();
+  const { showSuccess, showError } = useToast();
   
   const handleClick = () => {
+    if (!session) {
+      router.push('/login');
+      return;
+    }
     if (hasInterested || isLoading) return;
     setShowConfirm(true);
   };
   
   const handleConfirm = async () => {
+    if (!session) {
+      router.push('/login');
+      return;
+    }
+
     setShowConfirm(false);
     setIsLoading(true);
     
     try {
-      await createInterest(ideaId, simulatedPersonId, interestType);
+      const response = await fetch('/api/interests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ideaId,
+          interestType,
+          message: null
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Erro ao expressar interesse');
+      }
       
       setHasInterested(true);
       
-      if (interestType === InterestType.Collaborate) {
-        addRequest(idea, simulatedPersonName, simulatedPersonRole);
-        showSuccess('Solicitação de colaboração enviada! Verifique sua caixa de entrada.');
+      if (interestType === InterestType.Collaborate || interestType === InterestType.Fund) {
+        const actionText = interestType === InterestType.Collaborate ? 'colaboração' : 'financiamento';
+        showSuccess(`Solicitação de ${actionText} enviada! O autor da ideia foi notificado.`);
       } else {
         showSuccess('Interesse expresso com sucesso!');
       }
       
       onInterestAdded?.();
-    } catch (error) {
+      router.refresh();
+    } catch (error: any) {
       console.error('Failed to add interest:', error);
+      showError(error.message || 'Erro ao expressar interesse');
     } finally {
       setIsLoading(false);
     }

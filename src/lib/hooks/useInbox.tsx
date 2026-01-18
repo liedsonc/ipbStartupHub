@@ -1,65 +1,135 @@
 'use client';
 
-import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
-import { Idea } from '@/types';
+import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
+import { useSession } from 'next-auth/react';
 
 interface CollaborationRequest {
   id: string;
   ideaId: string;
   ideaTitle: string;
+  requesterId: string | null;
   requesterName: string;
   requesterRole: string;
+  requesterEmail?: string;
   message?: string;
   createdAt: string;
   read: boolean;
+  type: 'collaboration' | 'funding';
 }
 
 interface InboxContextType {
   requests: CollaborationRequest[];
   unreadCount: number;
-  addRequest: (idea: Idea, requesterName: string, requesterRole: string, message?: string) => void;
+  loading: boolean;
   markAsRead: (id: string) => void;
   markAllAsRead: () => void;
   removeRequest: (id: string) => void;
+  refresh: () => void;
 }
 
 const InboxContext = createContext<InboxContextType | null>(null);
 
 export function InboxProvider({ children }: { children: ReactNode }) {
+  const { data: session } = useSession();
   const [requests, setRequests] = useState<CollaborationRequest[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const addRequest = useCallback((
-    idea: Idea,
-    requesterName: string,
-    requesterRole: string,
-    message?: string
-  ) => {
-    const newRequest: CollaborationRequest = {
-      id: Math.random().toString(36).substring(7),
-      ideaId: idea.id,
-      ideaTitle: idea.title,
-      requesterName,
-      requesterRole,
-      message,
-      createdAt: new Date().toISOString(),
-      read: false,
-    };
+  const fetchNotifications = useCallback(async () => {
+    if (!session?.user) {
+      setRequests([]);
+      setLoading(false);
+      return;
+    }
 
-    setRequests((prev) => [newRequest, ...prev]);
+    try {
+      const response = await fetch('/api/notifications');
+      if (!response.ok) {
+        throw new Error('Erro ao buscar notificações');
+      }
+
+      const notifications = await response.json();
+      
+      const collaborationNotifications = notifications.filter(
+        (n: any) => n.type === 'collaboration' || n.type === 'funding'
+      );
+
+      const requestsWithDetails: CollaborationRequest[] = notifications
+        .filter((n: any) => n.ideaId)
+        .map((notification: any) => ({
+          id: notification.id,
+          ideaId: notification.ideaId,
+          ideaTitle: notification.ideaTitle || 'Ideia',
+          requesterId: notification.requesterId || null,
+          requesterName: notification.requesterName || 'Usuário',
+          requesterRole: notification.requesterRole || 'Usuário',
+          message: notification.interestMessage || null,
+          createdAt: notification.createdAt,
+          read: notification.read,
+          type: notification.type
+        }));
+
+      setRequests(requestsWithDetails);
+    } catch (error) {
+      console.error('Error fetching notifications:', error);
+      setRequests([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [session]);
+
+  useEffect(() => {
+    fetchNotifications();
+    const interval = setInterval(fetchNotifications, 30000);
+    return () => clearInterval(interval);
+  }, [fetchNotifications]);
+
+  const markAsRead = useCallback(async (id: string) => {
+    try {
+      const response = await fetch('/api/notifications', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, read: true })
+      });
+
+      if (response.ok) {
+        setRequests((prev) =>
+          prev.map((req) => (req.id === id ? { ...req, read: true } : req))
+        );
+      }
+    } catch (error) {
+      console.error('Error marking notification as read:', error);
+    }
   }, []);
 
-  const markAsRead = useCallback((id: string) => {
-    setRequests((prev) =>
-      prev.map((req) => (req.id === id ? { ...req, read: true } : req))
-    );
-  }, []);
+  const markAllAsRead = useCallback(async () => {
+    try {
+      const unreadIds = requests.filter(req => !req.read).map(req => req.id);
+      await Promise.all(unreadIds.map(id => 
+        fetch('/api/notifications', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, read: true })
+        })
+      ));
+      
+      setRequests((prev) => prev.map((req) => ({ ...req, read: true })));
+    } catch (error) {
+      console.error('Error marking all as read:', error);
+    }
+  }, [requests]);
 
-  const markAllAsRead = useCallback(() => {
-    setRequests((prev) => prev.map((req) => ({ ...req, read: true })));
-  }, []);
+  const removeRequest = useCallback(async (id: string) => {
+    try {
+      const response = await fetch(`/api/notifications?id=${id}`, {
+        method: 'DELETE'
+      });
 
-  const removeRequest = useCallback((id: string) => {
-    setRequests((prev) => prev.filter((req) => req.id !== id));
+      if (response.ok) {
+        setRequests((prev) => prev.filter((req) => req.id !== id));
+      }
+    } catch (error) {
+      console.error('Error removing notification:', error);
+    }
   }, []);
 
   const unreadCount = requests.filter((req) => !req.read).length;
@@ -69,10 +139,11 @@ export function InboxProvider({ children }: { children: ReactNode }) {
       value={{
         requests,
         unreadCount,
-        addRequest,
+        loading,
         markAsRead,
         markAllAsRead,
         removeRequest,
+        refresh: fetchNotifications,
       }}
     >
       {children}
