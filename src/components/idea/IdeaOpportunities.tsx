@@ -40,13 +40,13 @@ export function IdeaOpportunities({ opportunities }: IdeaOpportunitiesProps) {
 
   return (
     <div>
-      <h3 className="text-sm font-semibold text-gray-900 mb-2">Oportunidades Abertas</h3>
-      <p className="text-xs text-gray-600 mb-3">
+      <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Oportunidades Abertas</h3>
+      <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">
         Esta ideia está buscando:
       </p>
       <div className="space-y-3">
         {opportunities.map((opp, index) => (
-          <div key={index} className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+          <div key={index} className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-violet-300 dark:hover:border-violet-700 hover:shadow-md transition-all duration-200">
             <div className="flex items-start gap-2 mb-1">
               <Badge variant="primary" className="text-xs">
                 {opportunityLabels[opp.type]}
@@ -56,7 +56,7 @@ export function IdeaOpportunities({ opportunities }: IdeaOpportunitiesProps) {
               </Badge>
             </div>
             {opp.description && (
-              <p className="text-xs text-gray-600 mt-2">
+              <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
                 {opp.description}
               </p>
             )}

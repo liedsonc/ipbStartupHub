@@ -21,8 +21,8 @@ export default function InboxPage() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Caixa de Entrada</h1>
-          <p className="text-gray-600">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-gray-100 mb-3 bg-gradient-to-r from-violet-600 to-purple-600 dark:from-violet-400 dark:to-purple-400 bg-clip-text text-transparent">Caixa de Entrada</h1>
+          <p className="text-lg text-gray-600 dark:text-gray-400">
             Gerencie solicitações de colaboração e financiamento para suas ideias.
           </p>
         </div>
@@ -35,7 +35,7 @@ export default function InboxPage() {
       
       {loading ? (
         <div className="text-center py-12">
-          <p className="text-gray-600">Carregando notificações...</p>
+          <p className="text-gray-600 dark:text-gray-400">Carregando notificações...</p>
         </div>
       ) : requests.length === 0 ? (
         <EmptyState
@@ -47,7 +47,7 @@ export default function InboxPage() {
           {requests.map((request) => (
             <Card
               key={request.id}
-              className={request.read ? 'opacity-75' : 'border-violet-300'}
+              className={`${request.read ? 'opacity-75' : 'border-violet-300 dark:border-violet-700 shadow-lg'} transition-all duration-200`}
             >
               <CardBody>
                 <div className="flex items-start justify-between">
@@ -56,12 +56,12 @@ export default function InboxPage() {
                       {request.requesterId ? (
                         <Link
                           href={`/user/${request.requesterId}`}
-                          className="text-lg font-semibold text-gray-900 hover:text-violet-600"
+                          className="text-lg font-semibold text-gray-900 dark:text-gray-100 hover:text-violet-600 dark:hover:text-violet-400"
                         >
                           {request.requesterName}
                         </Link>
                       ) : (
-                        <h3 className="text-lg font-semibold text-gray-900">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                           {request.requesterName}
                         </h3>
                       )}
@@ -80,23 +80,23 @@ export default function InboxPage() {
                       </Badge>
                     </div>
                     
-                    <p className="text-sm text-gray-600 mb-2">
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                       {request.type === 'collaboration' ? 'Quer colaborar em:' : 'Quer financiar:'}{' '}
                       <Link
                         href={`/idea/${request.ideaId}`}
-                        className="text-violet-600 hover:underline font-medium"
+                        className="text-violet-600 dark:text-violet-400 hover:underline font-medium"
                       >
                         {request.ideaTitle}
                       </Link>
                     </p>
                     
                     {request.message && (
-                      <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded mt-2">
+                      <p className="text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700/50 p-3 rounded mt-2">
                         {request.message}
                       </p>
                     )}
                     
-                    <p className="text-xs text-gray-500 mt-3">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-3">
                       {formatRelativeTime(request.createdAt)}
                     </p>
                   </div>

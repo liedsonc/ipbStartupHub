@@ -45,8 +45,8 @@ export default async function PeoplePage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Diretório de Pessoas</h1>
-        <p className="text-gray-600">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-gray-100 mb-3 bg-gradient-to-r from-violet-600 to-purple-600 dark:from-violet-400 dark:to-purple-400 bg-clip-text text-transparent">Diretório de Pessoas</h1>
+        <p className="text-lg text-gray-600 dark:text-gray-400">
           Conecte-se com estudantes, professores, mentores e investidores na comunidade de startups.
         </p>
       </div>
@@ -69,7 +69,7 @@ export default async function PeoplePage() {
             };
             return (
             <div key={role}>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
                 {roleLabels[role] || role} ({rolePeople.length})
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -78,10 +78,10 @@ export default async function PeoplePage() {
                     <CardBody>
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
-                          <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">
                             {person.name}
                           </h3>
-                          <p className="text-sm text-gray-600 mb-2">
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                             {person.affiliation}
                           </p>
                         </div>
@@ -91,7 +91,7 @@ export default async function PeoplePage() {
                       </div>
                       
                       {person.bio && (
-                        <p className="text-sm text-gray-700 mb-3 line-clamp-2">
+                        <p className="text-sm text-gray-700 dark:text-gray-300 mb-3 line-clamp-2">
                           {person.bio}
                         </p>
                       )}
@@ -101,11 +101,11 @@ export default async function PeoplePage() {
                         seeking={person.opportunitiesSeeking}
                       />
                       
-                      <div className="flex items-center justify-between pt-3 border-t border-gray-100 mt-3">
+                      <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-700 mt-3">
                         <Badge variant="default" className="text-xs">
                           {interestTypeLabels[person.interestType]}
                         </Badge>
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
                           {person.interests.length} {person.interests.length === 1 ? 'ideia' : 'ideias'}
                         </span>
                       </div>

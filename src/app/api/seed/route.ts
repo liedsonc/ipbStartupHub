@@ -28,7 +28,7 @@ export async function POST(request: Request) {
         passwordHash,
         name: 'Admin User',
         role: Role.Admin,
-        affiliation: 'Startup Hub IPB',
+        affiliation: 'Startup Hub',
         emailVerified: true,
         profileComplete: true
       }

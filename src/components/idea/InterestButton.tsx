@@ -117,7 +117,7 @@ export function InterestButton({
         onConfirm={handleConfirm}
         confirmLabel="Sim, tenho interesse"
       >
-        <p className="text-gray-700">{getConfirmationMessage()}</p>
+        <p className="text-gray-700 dark:text-gray-300">{getConfirmationMessage()}</p>
       </Modal>
     </>
   );

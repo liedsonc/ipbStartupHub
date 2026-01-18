@@ -42,7 +42,7 @@ export default async function IdeaEditPage({ params }: IdeaEditPageProps) {
       
       <Card>
         <CardBody>
-          <h1 className="text-2xl font-bold text-gray-900 mb-6">Editar Ideia</h1>
+          <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-gray-100 mb-6 bg-gradient-to-r from-violet-600 to-purple-600 dark:from-violet-400 dark:to-purple-400 bg-clip-text text-transparent">Editar Ideia</h1>
           <IdeaForm
             ideaId={params.id}
             initialData={{

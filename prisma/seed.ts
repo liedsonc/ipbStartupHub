@@ -32,7 +32,7 @@ async function main() {
       passwordHash,
       name: 'Admin User',
       role: Role.Admin,
-      affiliation: 'Startup Hub IPB',
+      affiliation: 'Startup Hub',
       emailVerified: true,
       profileComplete: true
     }

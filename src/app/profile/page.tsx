@@ -26,39 +26,39 @@ export default async function ProfilePage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Meu Perfil</h1>
-        <p className="text-gray-600">Gerencie suas informações pessoais</p>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-gray-100 mb-3 bg-gradient-to-r from-violet-600 to-purple-600 dark:from-violet-400 dark:to-purple-400 bg-clip-text text-transparent">Meu Perfil</h1>
+        <p className="text-lg text-gray-600 dark:text-gray-400">Gerencie suas informações pessoais</p>
       </div>
 
       <div className="space-y-6">
         <Card>
           <CardHeader>
-            <h2 className="text-xl font-semibold text-gray-900">Informações Pessoais</h2>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Informações Pessoais</h2>
           </CardHeader>
           <CardBody>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Nome</label>
-                <p className="text-gray-900">{dbUser.name}</p>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nome</label>
+                <p className="text-gray-900 dark:text-gray-100">{dbUser.name}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <p className="text-gray-900">{dbUser.email}</p>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                <p className="text-gray-900 dark:text-gray-100">{dbUser.email}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Perfil</label>
-                <p className="text-gray-900">{dbUser.role}</p>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Perfil</label>
+                <p className="text-gray-900 dark:text-gray-100">{dbUser.role}</p>
               </div>
               {dbUser.affiliation && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Afiliação</label>
-                  <p className="text-gray-900">{dbUser.affiliation}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Afiliação</label>
+                  <p className="text-gray-900 dark:text-gray-100">{dbUser.affiliation}</p>
                 </div>
               )}
               {dbUser.bio && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Biografia</label>
-                  <p className="text-gray-900">{dbUser.bio}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Biografia</label>
+                  <p className="text-gray-900 dark:text-gray-100">{dbUser.bio}</p>
                 </div>
               )}
             </div>
@@ -67,25 +67,25 @@ export default async function ProfilePage() {
 
         <Card>
           <CardHeader>
-            <h2 className="text-xl font-semibold text-gray-900">Estatísticas</h2>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Estatísticas</h2>
           </CardHeader>
           <CardBody>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <p className="text-sm text-gray-600">Ideias Criadas</p>
-                <p className="text-2xl font-bold text-gray-900">
+                <p className="text-sm text-gray-600 dark:text-gray-400">Ideias Criadas</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                   {await prisma.idea.count({ where: { userId: user.id } })}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-600">Interesses Expressos</p>
-                <p className="text-2xl font-bold text-gray-900">
+                <p className="text-sm text-gray-600 dark:text-gray-400">Interesses Expressos</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                   {await prisma.interestSignal.count({ where: { userId: user.id } })}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-600">Membro desde</p>
-                <p className="text-2xl font-bold text-gray-900">
+                <p className="text-sm text-gray-600 dark:text-gray-400">Membro desde</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                   {new Date(dbUser.createdAt).toLocaleDateString('pt-BR')}
                 </p>
               </div>

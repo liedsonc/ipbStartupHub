@@ -31,7 +31,7 @@ export function OpportunitiesList({ offering = [], seeking = [] }: Opportunities
     <div className="space-y-3 mt-3">
       {offering.length > 0 && (
         <div>
-          <p className="text-xs font-semibold text-gray-700 mb-1.5">Oferece:</p>
+          <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Oferece:</p>
           <div className="flex flex-wrap gap-1.5">
             {offering.map((opp) => (
               <Badge key={opp} variant="success" className="text-xs">
@@ -44,7 +44,7 @@ export function OpportunitiesList({ offering = [], seeking = [] }: Opportunities
       
       {seeking.length > 0 && (
         <div>
-          <p className="text-xs font-semibold text-gray-700 mb-1.5">Busca:</p>
+          <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Busca:</p>
           <div className="flex flex-wrap gap-1.5">
             {seeking.map((opp) => (
               <Badge key={opp} variant="primary" className="text-xs">

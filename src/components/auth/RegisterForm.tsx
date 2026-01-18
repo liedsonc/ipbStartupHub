@@ -82,13 +82,13 @@ export function RegisterForm() {
   return (
     <Card className="max-w-md mx-auto">
       <CardHeader>
-        <h2 className="text-2xl font-bold text-gray-900">Criar Conta</h2>
-        <p className="text-gray-600 mt-1">Registre-se para começar</p>
+        <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 bg-gradient-to-r from-violet-600 to-purple-600 dark:from-violet-400 dark:to-purple-400 bg-clip-text text-transparent">Criar Conta</h2>
+        <p className="text-gray-600 dark:text-gray-400 mt-2">Registre-se para começar</p>
       </CardHeader>
       <CardBody>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Nome
             </label>
             <Input
@@ -103,7 +103,7 @@ export function RegisterForm() {
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Email
             </label>
             <Input
@@ -118,7 +118,7 @@ export function RegisterForm() {
           </div>
 
           <div>
-            <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="role" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Perfil
             </label>
             <Select
@@ -137,7 +137,7 @@ export function RegisterForm() {
           </div>
 
           <div>
-            <label htmlFor="affiliation" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="affiliation" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Afiliação
             </label>
             <Input
@@ -151,7 +151,7 @@ export function RegisterForm() {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Senha
             </label>
             <Input
@@ -166,7 +166,7 @@ export function RegisterForm() {
           </div>
 
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Confirmar Senha
             </label>
             <Input
@@ -181,8 +181,8 @@ export function RegisterForm() {
           </div>
 
           {error && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-sm text-red-600">{error}</p>
+            <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
             </div>
           )}
 

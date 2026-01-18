@@ -93,9 +93,9 @@ export function IdeaDetail({ idea: initialIdea, currentUserId }: IdeaDetailProps
           )}
         </div>
         
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">{idea.title}</h1>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-gray-100 mb-4 bg-gradient-to-r from-violet-600 to-purple-600 dark:from-violet-400 dark:to-purple-400 bg-clip-text text-transparent">{idea.title}</h1>
         
-        <div className="flex items-center gap-4 text-sm text-gray-600 mb-6">
+        <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-6">
           <span>Por {idea.authorName} • {idea.authorRole}</span>
           <span>•</span>
           <span>Publicado em {formatDate(idea.publishedAt)}</span>
@@ -106,8 +106,8 @@ export function IdeaDetail({ idea: initialIdea, currentUserId }: IdeaDetailProps
       
       <Card>
         <CardBody>
-          <h2 className="text-xl font-semibold text-gray-900 mb-3">Descrição</h2>
-          <p className="text-gray-700 whitespace-pre-line leading-relaxed">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3">Descrição</h2>
+          <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line leading-relaxed">
             {idea.description}
           </p>
         </CardBody>
@@ -116,7 +116,7 @@ export function IdeaDetail({ idea: initialIdea, currentUserId }: IdeaDetailProps
       {idea.tags.length > 0 && (
         <Card>
           <CardBody>
-            <h3 className="text-sm font-semibold text-gray-900 mb-2">Etiquetas</h3>
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">Etiquetas</h3>
             <div className="flex flex-wrap gap-2">
               {idea.tags.map((tag) => (
                 <Badge key={tag} variant="default">
@@ -138,7 +138,7 @@ export function IdeaDetail({ idea: initialIdea, currentUserId }: IdeaDetailProps
       
       <Card>
         <CardBody>
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Expressar Interesse</h2>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Expressar Interesse</h2>
           <div className="flex flex-col sm:flex-row gap-3 mb-6">
             <InterestButton
               ideaId={idea.id}
@@ -167,7 +167,7 @@ export function IdeaDetail({ idea: initialIdea, currentUserId }: IdeaDetailProps
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
               Pessoas Interessadas ({idea.interestedPeople.length})
             </h3>
             <InterestList people={idea.interestedPeople} />
@@ -177,8 +177,8 @@ export function IdeaDetail({ idea: initialIdea, currentUserId }: IdeaDetailProps
       
       <Card>
         <CardBody>
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">Contato</h2>
-          <p className="text-gray-600">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Contato</h2>
+          <p className="text-gray-600 dark:text-gray-400">
             Entre em contato com o autor da ideia:{' '}
             <span className="font-mono text-sm">{idea.contactEmail}</span>
           </p>

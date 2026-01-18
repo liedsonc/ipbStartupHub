@@ -52,7 +52,7 @@ function BrowseContent() {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center py-12">
-          <p className="text-gray-600">Carregando ideias...</p>
+          <p className="text-gray-600 dark:text-gray-400">Carregando ideias...</p>
         </div>
       </div>
     );
@@ -61,8 +61,8 @@ function BrowseContent() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Explorar Ideias de Startup</h1>
-        <p className="text-gray-600">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-gray-100 mb-3 bg-gradient-to-r from-violet-600 to-purple-600 dark:from-violet-400 dark:to-purple-400 bg-clip-text text-transparent">Explorar Ideias de Startup</h1>
+        <p className="text-lg text-gray-600 dark:text-gray-400">
           Descubra ideias inovadoras de estudantes, ex-alunos e membros do corpo docente.
         </p>
       </div>
@@ -87,7 +87,7 @@ function BrowseContent() {
             />
           ) : (
             <>
-              <div className="mb-4 text-sm text-gray-600">
+              <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
                 {ideas.length} {ideas.length === 1 ? 'ideia encontrada' : 'ideias encontradas'}
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -108,7 +108,7 @@ export default function BrowsePage() {
     <Suspense fallback={
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center py-12">
-          <p className="text-gray-600">Carregando ideias...</p>
+          <p className="text-gray-600 dark:text-gray-400">Carregando ideias...</p>
         </div>
       </div>
     }>

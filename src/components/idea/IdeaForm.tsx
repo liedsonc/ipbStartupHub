@@ -177,7 +177,7 @@ export function IdeaForm({ ideaId, initialData }: IdeaFormProps = {}) {
       />
       
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Descrição Completa *
         </label>
         <textarea
@@ -231,7 +231,7 @@ export function IdeaForm({ ideaId, initialData }: IdeaFormProps = {}) {
         value={formData.contactEmail}
         onChange={(e) => setFormData({ ...formData, contactEmail: e.target.value })}
         error={errors.contactEmail}
-        placeholder="seu.email@universidade.edu"
+        placeholder="seu.email@exemplo.com"
         required
       />
       

@@ -52,8 +52,8 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
                 className="w-24 h-24 rounded-full object-cover"
               />
             ) : (
-              <div className="w-24 h-24 rounded-full bg-violet-100 flex items-center justify-center">
-                <span className="text-3xl font-bold text-violet-600">
+              <div className="w-24 h-24 rounded-full bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center">
+                <span className="text-3xl font-bold text-violet-600 dark:text-violet-400">
                   {user.name.charAt(0).toUpperCase()}
                 </span>
               </div>
@@ -61,18 +61,18 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
             
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-3xl font-bold text-gray-900">{user.name}</h1>
+                <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-gray-100 bg-gradient-to-r from-violet-600 to-purple-600 dark:from-violet-400 dark:to-purple-400 bg-clip-text text-transparent">{user.name}</h1>
                 <Badge variant="default">
                   {roleLabels[user.role] || user.role}
                 </Badge>
               </div>
               
               {user.affiliation && (
-                <p className="text-gray-600 mb-2">{user.affiliation}</p>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">{user.affiliation}</p>
               )}
               
               {user.bio && (
-                <p className="text-gray-700 mt-4">{user.bio}</p>
+                <p className="text-gray-700 dark:text-gray-300 mt-4">{user.bio}</p>
               )}
             </div>
           </div>
@@ -82,14 +82,14 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <h2 className="text-xl font-semibold text-gray-900">Informações de Contato</h2>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Informações de Contato</h2>
           </CardHeader>
           <CardBody>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
                 <div className="flex items-center gap-2">
-                  <p className="text-gray-900">{user.email}</p>
+                  <p className="text-gray-900 dark:text-gray-100">{user.email}</p>
                   {!isOwnProfile && (
                     <a
                       href={`mailto:${user.email}?subject=Interesse em colaborar`}
@@ -105,7 +105,7 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
               
               {user.profile?.socialLinks && typeof user.profile.socialLinks === 'object' && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Links Sociais</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Links Sociais</label>
                   <div className="space-y-2">
                     {Object.entries(user.profile.socialLinks as Record<string, string>).map(([key, value]) => (
                       <a
@@ -113,7 +113,7 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
                         href={value}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-violet-600 hover:text-violet-700 block"
+                        className="text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 block"
                       >
                         {key}
                       </a>
@@ -128,7 +128,7 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
         {user.profile && (
           <Card>
             <CardHeader>
-              <h2 className="text-xl font-semibold text-gray-900">Habilidades</h2>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Habilidades</h2>
             </CardHeader>
             <CardBody>
               {user.profile.skills && user.profile.skills.length > 0 ? (
@@ -140,7 +140,7 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
                   ))}
                 </div>
               ) : (
-                <p className="text-gray-500 text-sm">Nenhuma habilidade listada</p>
+                <p className="text-gray-500 dark:text-gray-400 text-sm">Nenhuma habilidade listada</p>
               )}
             </CardBody>
           </Card>
