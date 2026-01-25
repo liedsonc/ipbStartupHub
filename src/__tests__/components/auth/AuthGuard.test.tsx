@@ -31,4 +31,3 @@ describe('AuthGuard', () => {
     expect(screen.getByText('Protected Content')).toBeInTheDocument()
   })
 })
-

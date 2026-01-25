@@ -31,4 +31,3 @@ describe('SearchBar', () => {
     expect(container.firstChild).toHaveClass('custom-class')
   })
 })
-

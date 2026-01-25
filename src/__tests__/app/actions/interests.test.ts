@@ -111,4 +111,3 @@ describe('addInterestAction', () => {
     expect(result.error).toBe('Ideia não encontrada')
   })
 })
-

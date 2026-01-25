@@ -33,4 +33,3 @@ describe('EmptyState', () => {
     expect(screen.queryByText(/create/i)).not.toBeInTheDocument()
   })
 })
-

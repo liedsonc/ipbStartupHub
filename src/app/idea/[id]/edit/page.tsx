@@ -53,6 +53,7 @@ export default async function IdeaEditPage({ params }: IdeaEditPageProps) {
               stage: idea.stage,
               contactEmail: idea.contactEmail,
               tags: idea.tags,
+              openOpportunities: idea.openOpportunities,
             }}
           />
         </CardBody>

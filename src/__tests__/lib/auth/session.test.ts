@@ -61,4 +61,3 @@ describe('getCurrentUser', () => {
     expect(user).toBeNull()
   })
 })
-

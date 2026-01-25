@@ -83,4 +83,3 @@ describe('registerAction', () => {
     expect(result.error).toBe('Senha deve ter pelo menos 6 caracteres')
   })
 })
-

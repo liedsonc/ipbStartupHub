@@ -39,4 +39,3 @@ describe('IdeaFilters', () => {
     expect(screen.getByText(/limpar filtros/i)).toBeInTheDocument()
   })
 })
-

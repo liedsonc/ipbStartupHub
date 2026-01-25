@@ -1,5 +1,7 @@
 import { Role } from '@prisma/client'
 
+export { Role }
+
 export type Permission =
   | 'ideas:create'
   | 'ideas:read'

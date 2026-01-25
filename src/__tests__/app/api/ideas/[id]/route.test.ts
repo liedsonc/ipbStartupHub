@@ -155,4 +155,3 @@ describe('DELETE /api/ideas/[id]', () => {
     expect(mockPrisma.idea.delete).toHaveBeenCalled()
   })
 })
-

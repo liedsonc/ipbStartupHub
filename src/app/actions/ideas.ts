@@ -91,6 +91,7 @@ export async function updateIdeaAction(
     stage: IdeaStage
     contactEmail?: string
     tags?: string[]
+    openOpportunities?: any
   }
 ) {
   const session = await getSession()
@@ -124,6 +125,7 @@ export async function updateIdeaAction(
         category: data.category,
         stage: data.stage,
         contactEmail: data.contactEmail || null,
+        openOpportunities: data.openOpportunities || null,
         tags: {
           deleteMany: {},
           create: (data.tags || []).map((tag: string) => ({ tag }))

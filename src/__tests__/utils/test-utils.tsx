@@ -27,3 +27,9 @@ const customRender = (
 export * from '@testing-library/react'
 export { customRender as render }
 
+describe('test-utils', () => {
+  it('should export render function', () => {
+    expect(customRender).toBeDefined()
+  })
+})
+

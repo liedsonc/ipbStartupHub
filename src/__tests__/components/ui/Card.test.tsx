@@ -71,4 +71,3 @@ describe('CardFooter', () => {
     expect(footer).toHaveClass('bg-gray-50', 'border-t')
   })
 })
-

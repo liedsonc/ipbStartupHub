@@ -23,3 +23,12 @@ export function getApiUrl(path: string) {
   return `${baseUrl}${path.startsWith('/') ? path : `/${path}`}`
 }
 
+export function getAbsoluteUrl(path: string): string {
+  if (path.startsWith('http://') || path.startsWith('https://')) {
+    return path
+  }
+  
+  const baseUrl = getBaseUrl()
+  return `${baseUrl}${path.startsWith('/') ? path : `/${path}`}`
+}
+

@@ -58,6 +58,12 @@ describe('createIdeaAction', () => {
       userId: 'user-1',
       createdAt: new Date(),
       updatedAt: new Date(),
+      user: {
+        id: 'user-1',
+        name: 'Test User',
+        role: 'Student',
+      },
+      tags: [{ tag: 'tag1' }],
     } as any)
 
     const result = await createIdeaAction(ideaData)
@@ -106,6 +112,19 @@ describe('updateIdeaAction', () => {
       id: 'idea-1',
       userId: 'user-1',
       title: 'New Title',
+      description: 'New Description',
+      shortDescription: null,
+      category: IdeaCategory.Tech,
+      stage: IdeaStage.Idea,
+      contactEmail: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      user: {
+        id: 'user-1',
+        name: 'Test User',
+        role: 'Student',
+      },
+      tags: [],
     } as any)
 
     const result = await updateIdeaAction('idea-1', {

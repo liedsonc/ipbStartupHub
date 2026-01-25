@@ -4,11 +4,12 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { IdeaWithInterests, InterestType } from '@/types';
-import { Card, CardBody, Badge, Button } from '../ui';
+import { Card, CardBody, Badge, Button, Modal } from '../ui';
 import { InterestButton } from './InterestButton';
 import { InterestList } from './InterestList';
 import { IdeaOpportunities } from './IdeaOpportunities';
 import { formatDate } from '@/lib/utils/format';
+import { useToast } from '@/lib/hooks/useToast';
 
 interface IdeaDetailProps {
   idea: IdeaWithInterests & { authorId: string };
@@ -43,8 +44,11 @@ const stageLabels: Record<string, string> = {
 export function IdeaDetail({ idea: initialIdea, currentUserId }: IdeaDetailProps) {
   const router = useRouter();
   const { data: session } = useSession();
+  const { showSuccess, showError } = useToast();
   const [idea, setIdea] = useState(initialIdea);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   
   const isOwner = idea.authorId ? session?.user?.id === idea.authorId : false;
   
@@ -69,6 +73,30 @@ export function IdeaDetail({ idea: initialIdea, currentUserId }: IdeaDetailProps
     }));
     setRefreshKey(prev => prev + 1);
   };
+
+  const handleDeleteIdea = async () => {
+    setIsDeleting(true);
+    try {
+      const response = await fetch(`/api/ideas/${idea.id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Erro ao apagar ideia');
+      }
+
+      showSuccess('Ideia apagada com sucesso!');
+      router.push('/browse');
+      router.refresh();
+    } catch (error: any) {
+      console.error('Error deleting idea:', error);
+      showError(error.message || 'Falha ao apagar ideia. Tente novamente.');
+    } finally {
+      setIsDeleting(false);
+      setShowDeleteModal(false);
+    }
+  };
   
   return (
     <div className="space-y-6">
@@ -83,13 +111,23 @@ export function IdeaDetail({ idea: initialIdea, currentUserId }: IdeaDetailProps
             </Badge>
           </div>
           {isOwner && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => router.push(`/idea/${idea.id}/edit`)}
-            >
-              Editar
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push(`/idea/${idea.id}/edit`)}
+              >
+                Editar
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowDeleteModal(true)}
+                className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20"
+              >
+                Apagar
+              </Button>
+            </div>
           )}
         </div>
         
@@ -184,6 +222,24 @@ export function IdeaDetail({ idea: initialIdea, currentUserId }: IdeaDetailProps
           </p>
         </CardBody>
       </Card>
+
+      <Modal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        title="Apagar Ideia"
+        onConfirm={handleDeleteIdea}
+        confirmLabel={isDeleting ? 'Apagando...' : 'Sim, apagar'}
+        showCancel={true}
+      >
+        <div className="space-y-4">
+          <p className="text-gray-700 dark:text-gray-300">
+            Tem certeza que deseja apagar esta ideia? Esta ação não pode ser desfeita.
+          </p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Todas as informações relacionadas a esta ideia serão permanentemente removidas.
+          </p>
+        </div>
+      </Modal>
     </div>
   );
 }

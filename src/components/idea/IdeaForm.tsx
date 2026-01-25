@@ -3,9 +3,10 @@
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { IdeaCategory, IdeaStage } from '@/types';
+import { IdeaCategory, IdeaStage, OpenOpportunity } from '@/types';
 import { Input, Select, Button } from '../ui';
 import { useToast } from '@/lib/hooks/useToast';
+import { JobOpportunitiesManager } from './JobOpportunitiesManager';
 
 const categories = Object.values(IdeaCategory);
 const stages = Object.values(IdeaStage);
@@ -46,6 +47,7 @@ interface IdeaFormProps {
     stage: IdeaStage;
     contactEmail: string;
     tags: string[];
+    openOpportunities?: OpenOpportunity[];
   };
 }
 
@@ -67,6 +69,10 @@ export function IdeaForm({ ideaId, initialData }: IdeaFormProps = {}) {
     contactEmail: initialData?.contactEmail || session?.user?.email || '',
     tags: initialData?.tags?.join(', ') || '',
   });
+
+  const [jobOpportunities, setJobOpportunities] = useState<OpenOpportunity[]>(
+    initialData?.openOpportunities || []
+  );
   
   const validate = (): boolean => {
     const newErrors: Partial<Record<keyof FormData, string>> = {};
@@ -127,6 +133,7 @@ export function IdeaForm({ ideaId, initialData }: IdeaFormProps = {}) {
           stage: formData.stage,
           contactEmail: formData.contactEmail.trim(),
           tags: tagsArray,
+          openOpportunities: jobOpportunities,
         })
       });
 
@@ -241,6 +248,13 @@ export function IdeaForm({ ideaId, initialData }: IdeaFormProps = {}) {
         onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
         placeholder="ex: IA, mobile, acessibilidade"
       />
+
+      <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+        <JobOpportunitiesManager
+          opportunities={jobOpportunities}
+          onChange={setJobOpportunities}
+        />
+      </div>
       
       <div className="flex gap-4">
         <Button

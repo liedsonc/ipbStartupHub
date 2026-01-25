@@ -72,4 +72,3 @@ describe('Modal', () => {
     expect(onConfirm).toHaveBeenCalled()
   })
 })
-

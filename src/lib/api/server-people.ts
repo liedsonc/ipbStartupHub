@@ -4,7 +4,10 @@ import { prisma } from '@/lib/db/prisma'
 export async function fetchPeopleServer(): Promise<Person[]> {
   const users = await prisma.user.findMany({
     where: {
-      deletedAt: null
+      deletedAt: null,
+      role: {
+        not: 'Admin'
+      }
     },
     select: {
       id: true,

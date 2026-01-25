@@ -132,4 +132,3 @@ describe('POST /api/ideas', () => {
     expect(response.status).toBe(401)
   })
 })
-

@@ -57,4 +57,3 @@ describe('Header', () => {
     expect(screen.getByText(/enviar ideia/i)).toBeInTheDocument()
   })
 })
-

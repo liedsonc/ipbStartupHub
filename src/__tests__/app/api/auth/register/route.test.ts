@@ -103,4 +103,3 @@ describe('POST /api/auth/register', () => {
     expect(data.error).toContain('senha')
   })
 })
-

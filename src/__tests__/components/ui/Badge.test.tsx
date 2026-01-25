@@ -43,4 +43,3 @@ describe('Badge', () => {
     expect(badge).toHaveClass('custom-class')
   })
 })
-

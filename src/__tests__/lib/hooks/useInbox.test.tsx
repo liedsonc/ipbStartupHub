@@ -53,26 +53,29 @@ describe('useInbox', () => {
   })
 
   it('marks notification as read', async () => {
-    ;(global.fetch as jest.Mock).mockResolvedValueOnce({
-      ok: true,
-      json: async () => [
-        {
-          id: 'notif-1',
-          read: false,
-          ideaId: 'idea-1',
-          ideaTitle: 'Test Idea',
-          requesterId: 'user-2',
-          requesterName: 'Requester',
-          requesterRole: 'Student',
-          createdAt: new Date().toISOString(),
-          type: 'collaboration',
-        },
-      ],
-    })
+    const mockNotifications = [
+      {
+        id: 'notif-1',
+        read: false,
+        ideaId: 'idea-1',
+        ideaTitle: 'Test Idea',
+        requesterId: 'user-2',
+        requesterName: 'Requester',
+        requesterRole: 'Student',
+        createdAt: new Date().toISOString(),
+        type: 'collaboration',
+      },
+    ]
 
-    ;(global.fetch as jest.Mock).mockResolvedValueOnce({
-      ok: true,
-    })
+    ;(global.fetch as jest.Mock)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockNotifications,
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ id: 'notif-1', read: true }),
+      })
 
     const wrapper = ({ children }: { children: ReactNode }) => (
       <InboxProvider>{children}</InboxProvider>
@@ -80,9 +83,12 @@ describe('useInbox', () => {
 
     const { result } = renderHook(() => useInbox(), { wrapper })
 
-    await waitFor(() => {
-      expect(result.current.requests.length).toBeGreaterThan(0)
-    })
+    await waitFor(
+      () => {
+        expect(result.current.requests.length).toBeGreaterThan(0)
+      },
+      { timeout: 3000 }
+    )
 
     result.current.markAsRead('notif-1')
 

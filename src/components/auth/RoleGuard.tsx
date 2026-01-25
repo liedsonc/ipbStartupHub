@@ -48,4 +48,3 @@ export function PermissionGuard({ children, permission, fallback = null }: Permi
 
   return <>{children}</>
 }
-

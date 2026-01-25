@@ -55,4 +55,3 @@ describe('Select', () => {
     expect(select.value).toBe('2')
   })
 })
-

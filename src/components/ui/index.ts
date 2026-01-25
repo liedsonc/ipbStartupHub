@@ -4,4 +4,5 @@ export { Badge } from './Badge';
 export { Input } from './Input';
 export { Select } from './Select';
 export { SearchBar } from './SearchBar';
+export { Modal } from './Modal';
 

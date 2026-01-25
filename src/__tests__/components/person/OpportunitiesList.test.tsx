@@ -41,4 +41,3 @@ describe('OpportunitiesList', () => {
     expect(screen.getByText(/busca/i)).toBeInTheDocument()
   })
 })
-

@@ -119,7 +119,7 @@ export async function PUT(
     }
 
     const body = await request.json()
-    const { title, description, shortDescription, category, stage, contactEmail, tags } = body
+    const { title, description, shortDescription, category, stage, contactEmail, tags, openOpportunities } = body
 
     const updatedIdea = await prisma.idea.update({
       where: { id: params.id },
@@ -130,6 +130,7 @@ export async function PUT(
         category,
         stage,
         contactEmail,
+        openOpportunities: openOpportunities || null,
         tags: {
           deleteMany: {},
           create: (tags || []).map((tag: string) => ({ tag }))
@@ -188,7 +189,7 @@ export async function DELETE(
 
     if (!canDelete) {
       return NextResponse.json(
-        { error: 'Sem permissão para deletar esta ideia' },
+        { error: 'Sem permissão para apagar esta ideia' },
         { status: 403 }
       )
     }
@@ -202,7 +203,7 @@ export async function DELETE(
   } catch (error) {
     console.error('Error deleting idea:', error)
     return NextResponse.json(
-      { error: 'Erro ao deletar ideia' },
+      { error: 'Erro ao apagar ideia' },
       { status: 500 }
     )
   }

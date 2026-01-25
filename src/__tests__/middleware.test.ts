@@ -99,4 +99,3 @@ describe('middleware', () => {
     expect(data.error).toBe('Não autorizado')
   })
 })
-

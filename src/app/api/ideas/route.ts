@@ -16,7 +16,10 @@ export async function GET(request: Request) {
 
     const where: any = {
       status: IdeaStatus.published,
-      deletedAt: null
+      deletedAt: null,
+      user: {
+        deletedAt: null
+      }
     }
 
     if (category) {

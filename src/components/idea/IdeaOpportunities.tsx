@@ -7,17 +7,20 @@ interface IdeaOpportunitiesProps {
 
 const opportunityLabels: Record<OpportunityType, string> = {
   [OpportunityType.Investor]: 'Investidor',
+  [OpportunityType.CoFounder]: 'Sócio/Co-fundador',
   [OpportunityType.Engineer]: 'Engenheiro',
+  [OpportunityType.Developer]: 'Desenvolvedor',
   [OpportunityType.Designer]: 'Designer',
   [OpportunityType.Business]: 'Negócios',
   [OpportunityType.Marketing]: 'Marketing',
-  [OpportunityType.Mentor]: 'Mentor',
-  [OpportunityType.CoFounder]: 'Co-fundador',
-  [OpportunityType.Developer]: 'Desenvolvedor',
+  [OpportunityType.Sales]: 'Vendas',
+  [OpportunityType.HR]: 'Recursos Humanos',
+  [OpportunityType.Accountant]: 'Contabilista',
+  [OpportunityType.Legal]: 'Jurídico',
   [OpportunityType.DataScientist]: 'Cientista de Dados',
   [OpportunityType.ProductManager]: 'Gerente de Produto',
-  [OpportunityType.Sales]: 'Vendas',
-  [OpportunityType.Legal]: 'Jurídico',
+  [OpportunityType.Mentor]: 'Mentor',
+  [OpportunityType.Advisor]: 'Conselheiro',
   [OpportunityType.Other]: 'Outro',
 };
 

@@ -1,6 +1,6 @@
 import { render, screen } from '@/__tests__/utils/test-utils'
 import { IdeaCard } from '@/components/idea/IdeaCard'
-import { mockIdea } from '@/__tests__/utils/mocks'
+import { mockIdea } from '@/__tests__/utils/__mocks__'
 
 describe('IdeaCard', () => {
   it('renders idea title', () => {

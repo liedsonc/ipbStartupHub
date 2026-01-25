@@ -2,14 +2,17 @@ import { getAbsoluteUrl } from '@/lib/utils/url'
 
 describe('getAbsoluteUrl', () => {
   const originalEnv = process.env
+  const originalWindow = global.window
 
   beforeEach(() => {
     jest.resetModules()
     process.env = { ...originalEnv }
+    delete (global as any).window
   })
 
   afterEach(() => {
     process.env = originalEnv
+    global.window = originalWindow
   })
 
   it('returns absolute URL with VERCEL_URL', () => {

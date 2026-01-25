@@ -11,6 +11,14 @@ export async function createInterestAction(
   interestType: InterestType,
   message?: string
 ) {
+  return addInterestAction(ideaId, interestType, message)
+}
+
+export async function addInterestAction(
+  ideaId: string,
+  interestType: InterestType,
+  message?: string
+) {
   const session = await getSession()
 
   if (!session?.user) {

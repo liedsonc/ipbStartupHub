@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@/__tests__/utils/test-utils'
 import { InterestButton } from '@/components/idea/InterestButton'
 import { InterestType } from '@/types'
-import { mockIdea } from '@/__tests__/utils/mocks'
+import { mockIdea } from '@/__tests__/utils/__mocks__'
 import userEvent from '@testing-library/user-event'
 
 jest.mock('next/navigation', () => ({

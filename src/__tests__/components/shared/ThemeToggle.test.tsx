@@ -20,4 +20,3 @@ describe('ThemeToggle', () => {
            !document.documentElement.classList.contains('dark')).toBeTruthy()
   })
 })
-

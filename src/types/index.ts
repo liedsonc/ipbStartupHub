@@ -32,17 +32,20 @@ export enum InterestType {
 
 export enum OpportunityType {
   Investor = 'Investor',
+  CoFounder = 'CoFounder',
   Engineer = 'Engineer',
+  Developer = 'Developer',
   Designer = 'Designer',
   Business = 'Business',
   Marketing = 'Marketing',
-  Mentor = 'Mentor',
-  CoFounder = 'CoFounder',
-  Developer = 'Developer',
+  Sales = 'Sales',
+  HR = 'HR',
+  Accountant = 'Accountant',
+  Legal = 'Legal',
   DataScientist = 'DataScientist',
   ProductManager = 'ProductManager',
-  Sales = 'Sales',
-  Legal = 'Legal',
+  Mentor = 'Mentor',
+  Advisor = 'Advisor',
   Other = 'Other',
 }
 
@@ -150,4 +153,3 @@ export interface User {
   createdAt: string;
   updatedAt: string;
 }
-

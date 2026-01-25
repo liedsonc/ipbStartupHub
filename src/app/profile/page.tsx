@@ -1,6 +1,7 @@
 import { getCurrentUser } from '@/lib/auth/session'
 import { redirect } from 'next/navigation'
 import { Card, CardBody, CardHeader } from '@/components/ui/Card'
+import { DeleteAccountSection } from '@/components/profile/DeleteAccountSection'
 
 export const dynamic = 'force-dynamic'
 
@@ -22,6 +23,13 @@ export default async function ProfilePage() {
   if (!dbUser) {
     redirect('/login')
   }
+
+  const ideaCount = await prisma.idea.count({ 
+    where: { 
+      userId: user.id,
+      deletedAt: null
+    } 
+  })
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -92,6 +100,8 @@ export default async function ProfilePage() {
             </div>
           </CardBody>
         </Card>
+
+        <DeleteAccountSection userId={user.id} ideaCount={ideaCount} />
       </div>
     </div>
   )

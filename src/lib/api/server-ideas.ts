@@ -5,7 +5,10 @@ import { IdeaStatus } from '@prisma/client'
 export async function fetchIdeasServer(filters?: IdeaFilters): Promise<Idea[]> {
   const where: any = {
     status: IdeaStatus.published,
-    deletedAt: null
+    deletedAt: null,
+    user: {
+      deletedAt: null
+    }
   }
 
   if (filters?.category) {
@@ -36,7 +39,8 @@ export async function fetchIdeasServer(filters?: IdeaFilters): Promise<Idea[]> {
           id: true,
           name: true,
           role: true,
-          avatarUrl: true
+          avatarUrl: true,
+          deletedAt: true
         }
       },
       tags: true,
@@ -48,7 +52,9 @@ export async function fetchIdeasServer(filters?: IdeaFilters): Promise<Idea[]> {
     }
   })
 
-  return ideas.map(idea => ({
+  const validIdeas = ideas.filter(idea => !idea.deletedAt && !idea.user.deletedAt)
+
+  return validIdeas.map(idea => ({
     id: idea.id,
     title: idea.title,
     description: idea.description,
@@ -75,7 +81,8 @@ export async function fetchIdeaByIdServer(id: string): Promise<Idea | null> {
           id: true,
           name: true,
           role: true,
-          avatarUrl: true
+          avatarUrl: true,
+          deletedAt: true
         }
       },
       tags: true,
@@ -87,7 +94,7 @@ export async function fetchIdeaByIdServer(id: string): Promise<Idea | null> {
     }
   })
 
-  if (!idea || idea.deletedAt) {
+  if (!idea || idea.deletedAt || idea.user.deletedAt) {
     return null
   }
 
@@ -118,11 +125,17 @@ export async function fetchIdeaWithInterestsServer(id: string): Promise<(IdeaWit
           id: true,
           name: true,
           role: true,
-          avatarUrl: true
+          avatarUrl: true,
+          deletedAt: true
         }
       },
       tags: true,
       interestSignals: {
+        where: {
+          user: {
+            deletedAt: null
+          }
+        },
         include: {
           user: {
             select: {
@@ -142,7 +155,7 @@ export async function fetchIdeaWithInterestsServer(id: string): Promise<(IdeaWit
     }
   })
 
-  if (!idea || idea.deletedAt) {
+  if (!idea || idea.deletedAt || idea.user.deletedAt) {
     return null
   }
 

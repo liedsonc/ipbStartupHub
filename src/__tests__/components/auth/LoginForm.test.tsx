@@ -63,4 +63,3 @@ describe('LoginForm', () => {
     expect(passwordInput).toBeRequired()
   })
 })
-
