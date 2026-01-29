@@ -9,6 +9,7 @@ jest.mock('next/navigation', () => ({
 }))
 
 jest.mock('next-auth/react', () => ({
+  SessionProvider: ({ children }: any) => <div>{children}</div>,
   useSession: () => ({
     data: {
       user: {
@@ -19,6 +20,8 @@ jest.mock('next-auth/react', () => ({
     },
     status: 'authenticated',
   }),
+  signIn: jest.fn(),
+  signOut: jest.fn(),
 }))
 
 describe('AuthGuard', () => {

@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import { Role } from '@prisma/client'
+import { generateVerificationToken } from '@/lib/tokens'
+import { sendVerificationEmail } from '@/lib/mail'
 
 export const dynamic = 'force-dynamic'
 
@@ -52,6 +54,9 @@ export async function POST(request: Request) {
         role: true
       }
     })
+
+    const verificationToken = await generateVerificationToken(email)
+    await sendVerificationEmail(verificationToken.email, verificationToken.token)
 
     return NextResponse.json({ user }, { status: 201 })
   } catch (error) {

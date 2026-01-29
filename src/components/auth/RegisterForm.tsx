@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { signIn } from 'next-auth/react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Card, CardBody, CardHeader } from '@/components/ui/Card'
@@ -60,8 +61,14 @@ export function RegisterForm() {
         return
       }
 
-      showSuccess('Conta criada com sucesso! Faça login para continuar.')
-      router.push('/login')
+      showSuccess('Conta criada com sucesso! Redirecionando...')
+
+      await signIn('credentials', {
+        email: formData.email,
+        password: formData.password,
+        redirect: true,
+        callbackUrl: '/browse'
+      })
     } catch (err) {
       setError('Erro ao criar conta. Tente novamente.')
       showError('Erro ao criar conta. Tente novamente.')
