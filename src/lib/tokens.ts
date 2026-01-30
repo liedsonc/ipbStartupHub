@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
-import { prisma } from '@/lib/db/prisma'
 
 export const generateVerificationToken = async (email: string) => {
+  const { prisma } = await import('@/lib/db/prisma')
   const token = uuidv4()
   const expires = new Date(new Date().getTime() + 3600 * 1000) // 1 hour
 
@@ -27,6 +27,7 @@ export const generateVerificationToken = async (email: string) => {
 }
 
 export const generatePasswordResetToken = async (email: string) => {
+  const { prisma } = await import('@/lib/db/prisma')
   const token = uuidv4()
   const expires = new Date(new Date().getTime() + 3600 * 1000) // 1 hour
 

@@ -36,7 +36,7 @@ describe('POST /api/interests', () => {
         email: 'test@example.com',
         name: 'Test User',
         role: 'Student',
-        emailVerified: true,
+        emailVerified: new Date(),
       },
     } as any)
   })

@@ -41,7 +41,7 @@ describe('addInterestAction', () => {
         email: 'test@example.com',
         name: 'Test User',
         role: 'Student',
-        emailVerified: true,
+        emailVerified: new Date(),
       },
     } as any)
   })

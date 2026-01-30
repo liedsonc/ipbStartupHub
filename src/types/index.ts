@@ -149,7 +149,7 @@ export interface User {
   affiliation?: string;
   avatarUrl?: string;
   bio?: string;
-  emailVerified: boolean;
+  emailVerified: Date | null;
   createdAt: string;
   updatedAt: string;
 }

@@ -30,7 +30,7 @@ describe('middleware', () => {
         email: 'test@example.com',
         name: 'Test User',
         role: 'Student',
-        emailVerified: true,
+        emailVerified: new Date(),
       },
     } as any)
 
@@ -58,7 +58,7 @@ describe('middleware', () => {
         email: 'admin@example.com',
         name: 'Admin User',
         role: 'Admin',
-        emailVerified: true,
+        emailVerified: new Date(),
       },
     } as any)
 
@@ -75,7 +75,7 @@ describe('middleware', () => {
         email: 'test@example.com',
         name: 'Test User',
         role: 'Student',
-        emailVerified: true,
+        emailVerified: new Date(),
       },
     } as any)
 

@@ -14,6 +14,14 @@ jest.mock('bcryptjs', () => ({
   hash: jest.fn(),
 }))
 
+jest.mock('@/lib/tokens', () => ({
+  generateVerificationToken: jest.fn().mockResolvedValue({ email: 'test@example.com', token: 'token' }),
+}))
+
+jest.mock('@/lib/mail', () => ({
+  sendVerificationEmail: jest.fn().mockResolvedValue(null),
+}))
+
 import { prisma } from '@/lib/db/prisma'
 import bcrypt from 'bcryptjs'
 
@@ -40,7 +48,7 @@ describe('POST /api/auth/register', () => {
       id: 'user-1',
       ...userData,
       passwordHash: 'hashed_password',
-      emailVerified: false,
+      emailVerified: null,
       createdAt: new Date(),
       updatedAt: new Date(),
       deletedAt: null,

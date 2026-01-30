@@ -75,7 +75,7 @@ describe('PUT /api/ideas/[id]', () => {
         email: 'test@example.com',
         name: 'Test User',
         role: 'Student',
-        emailVerified: true,
+        emailVerified: new Date(),
       },
     } as any)
   })
@@ -135,7 +135,7 @@ describe('DELETE /api/ideas/[id]', () => {
         email: 'test@example.com',
         name: 'Test User',
         role: 'Student',
-        emailVerified: true,
+        emailVerified: new Date(),
       },
     } as any)
   })

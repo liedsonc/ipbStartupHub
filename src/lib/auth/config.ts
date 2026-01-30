@@ -82,7 +82,7 @@ export const authOptions: NextAuthConfig = {
       if (session.user) {
         (session.user as any).id = token.id as string
         (session.user as any).role = token.role as Role
-        (session.user as any).emailVerified = Boolean(token.emailVerified)
+        (session.user as any).emailVerified = token.emailVerified
       }
       return session
     }

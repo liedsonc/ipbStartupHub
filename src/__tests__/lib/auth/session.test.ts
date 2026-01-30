@@ -16,7 +16,7 @@ describe('getSession', () => {
         email: 'test@example.com',
         name: 'Test User',
         role: 'Student',
-        emailVerified: true,
+        emailVerified: new Date(),
       },
       expires: '2024-12-31',
     }
@@ -43,7 +43,7 @@ describe('getCurrentUser', () => {
         email: 'test@example.com',
         name: 'Test User',
         role: 'Student',
-        emailVerified: true,
+        emailVerified: new Date(),
       },
       expires: '2024-12-31',
     }

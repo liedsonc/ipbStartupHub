@@ -42,7 +42,7 @@ async function main() {
       name: adminName,
       role: Role.Admin,
       affiliation: adminAffiliation,
-      emailVerified: true,
+      emailVerified: new Date(),
       profileComplete: true
     }
   })

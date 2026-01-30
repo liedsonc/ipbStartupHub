@@ -34,7 +34,7 @@ describe('GET /api/notifications', () => {
         email: 'test@example.com',
         name: 'Test User',
         role: 'Student',
-        emailVerified: true,
+        emailVerified: new Date(),
       },
     } as any)
   })
@@ -96,7 +96,7 @@ describe('PATCH /api/notifications', () => {
         email: 'test@example.com',
         name: 'Test User',
         role: 'Student',
-        emailVerified: true,
+        emailVerified: new Date(),
       },
     } as any)
   })
@@ -151,7 +151,7 @@ describe('DELETE /api/notifications', () => {
         email: 'test@example.com',
         name: 'Test User',
         role: 'Student',
-        emailVerified: true,
+        emailVerified: new Date(),
       },
     } as any)
   })

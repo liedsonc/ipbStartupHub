@@ -4,8 +4,6 @@ import { Role } from '@prisma/client'
 import { generateVerificationToken } from '@/lib/tokens'
 import { sendVerificationEmail } from '@/lib/mail'
 
-export const dynamic = 'force-dynamic'
-
 export async function POST(request: Request) {
   try {
     const { prisma } = await import('@/lib/db/prisma')
