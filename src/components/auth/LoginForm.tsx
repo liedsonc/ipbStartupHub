@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Card, CardBody, CardHeader } from '@/components/ui/Card'
@@ -80,6 +81,14 @@ export function LoginForm() {
               disabled={isLoading}
               placeholder="••••••••"
             />
+            <div className="flex justify-end mt-1">
+              <Link
+                href="/auth/forgot-password"
+                className="text-xs text-violet-600 hover:text-violet-500 dark:text-violet-400 dark:hover:text-violet-300"
+              >
+                Esqueceu a senha?
+              </Link>
+            </div>
           </div>
 
           {error && (

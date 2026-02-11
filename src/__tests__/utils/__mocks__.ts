@@ -6,7 +6,7 @@ export const mockUser = {
   email: 'test@example.com',
   name: 'Test User',
   role: 'Student' as Role,
-  emailVerified: true,
+  emailVerified: new Date(),
 }
 
 export const mockSession = {

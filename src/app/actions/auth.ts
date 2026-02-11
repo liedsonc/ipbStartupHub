@@ -3,6 +3,8 @@
 import { prisma } from '@/lib/db/prisma'
 import bcrypt from 'bcryptjs'
 import { Role } from '@prisma/client'
+import { generateVerificationToken } from '@/lib/tokens'
+import { sendVerificationEmail } from '@/lib/mail'
 
 export async function loginAction(email: string, password: string) {
   return { error: 'Use the LoginForm component instead' }
@@ -53,6 +55,9 @@ export async function registerAction(data: {
         role: true
       }
     })
+
+    const verificationToken = await generateVerificationToken(data.email)
+    await sendVerificationEmail(verificationToken.email, verificationToken.token)
 
     return {
       success: true,

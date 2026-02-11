@@ -1,10 +1,9 @@
 import NextAuth from 'next-auth'
-import type { NextAuthConfig } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import bcrypt from 'bcryptjs'
-import { Role } from '@prisma/client'
+import { authConfig } from './auth.config'
 
-export const authOptions: NextAuthConfig = {
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
   trustHost: true,
   providers: [
     CredentialsProvider({
@@ -22,6 +21,8 @@ export const authOptions: NextAuthConfig = {
         const password = credentials.password as string
 
         const { prisma } = await import('@/lib/db/prisma')
+        const bcrypt = await import('bcryptjs')
+
         const user = await prisma.user.findUnique({
           where: { email },
           select: {
@@ -60,43 +61,12 @@ export const authOptions: NextAuthConfig = {
       }
     })
   ],
-  session: {
-    strategy: 'jwt',
-    maxAge: 30 * 24 * 60 * 60
-  },
-  pages: {
-    signIn: '/login',
-    signOut: '/login',
-    error: '/login'
-  },
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id
-        token.role = user.role
-        token.emailVerified = user.emailVerified
-      }
-      return token
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        (session.user as any).id = token.id as string
-        (session.user as any).role = token.role as Role
-        (session.user as any).emailVerified = Boolean(token.emailVerified)
-      }
-      return session
-    }
-  },
   secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET
-} satisfies NextAuthConfig
+})
 
-if (!authOptions.secret) {
-  throw new Error(
-    'NEXTAUTH_SECRET or AUTH_SECRET environment variable is required. ' +
-    'Please set it in your environment variables. ' +
-    'You can generate one with: openssl rand -base64 32'
+if (!process.env.NEXTAUTH_SECRET && !process.env.AUTH_SECRET) {
+  console.warn(
+    'NEXTAUTH_SECRET or AUTH_SECRET environment variable is missing. ' +
+    'Authentication might not work correctly in production.'
   )
 }
-
-export const { handlers, auth, signIn, signOut } = NextAuth(authOptions)
-

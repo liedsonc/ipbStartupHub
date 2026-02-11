@@ -38,21 +38,18 @@ if (typeof global.Response === 'undefined') {
   }
 }
 
-jest.mock('next-auth/react', () => {
-  const React = require('react')
-  return {
-    SessionProvider: ({ children }) => React.createElement('div', null, children),
-    useSession: () => ({
-      data: null,
-      status: 'unauthenticated',
-    }),
-  }
-})
+jest.mock('next-auth/react', () => ({
+  __esModule: true,
+  SessionProvider: ({ children }) => children,
+  useSession: jest.fn(() => ({
+    data: null,
+    status: 'unauthenticated',
+  })),
+  signIn: jest.fn(),
+  signOut: jest.fn(),
+}))
 
-jest.mock('@/components/auth/SessionProvider', () => {
-  const React = require('react')
-  return {
-    SessionProvider: ({ children }) => React.createElement('div', null, children),
-  }
-})
-
+jest.mock('@/components/auth/SessionProvider', () => ({
+  __esModule: true,
+  SessionProvider: ({ children }) => children,
+}))

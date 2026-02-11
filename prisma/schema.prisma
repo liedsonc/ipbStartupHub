@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  engineType = "binary"
 }
 
 datasource db {
@@ -74,7 +75,7 @@ model User {
   affiliation   String?
   avatarUrl     String?   @map("avatar_url")
   bio           String?
-  emailVerified Boolean   @default(false) @map("email_verified")
+  emailVerified DateTime? @map("email_verified")
   profileComplete Boolean @default(false) @map("profile_complete")
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
@@ -90,6 +91,26 @@ model User {
   @@index([email])
   @@index([role])
   @@map("users")
+}
+
+model VerificationToken {
+  id      String   @id @default(uuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+  @@map("verification_tokens")
+}
+
+model PasswordResetToken {
+  id      String   @id @default(uuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+  @@map("password_reset_tokens")
 }
 
 model UserProfile {

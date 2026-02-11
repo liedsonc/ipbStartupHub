@@ -1,12 +1,10 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/db/prisma'
 import { Role } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 
-export const dynamic = 'force-dynamic'
-
 export async function POST(request: Request) {
   try {
+    const { prisma } = await import('@/lib/db/prisma')
     const authHeader = request.headers.get('authorization')
     
     if (authHeader !== `Bearer ${process.env.SEED_SECRET || 'seed-secret-change-in-production'}`) {
@@ -41,7 +39,7 @@ export async function POST(request: Request) {
         name: adminName,
         role: Role.Admin,
         affiliation: adminAffiliation,
-        emailVerified: true,
+        emailVerified: new Date(),
         profileComplete: true
       }
     })

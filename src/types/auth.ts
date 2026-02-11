@@ -5,7 +5,7 @@ export interface SessionUser {
   email: string
   name: string
   role: Role
-  emailVerified: boolean
+  emailVerified: Date | null
 }
 
 export interface Session {
