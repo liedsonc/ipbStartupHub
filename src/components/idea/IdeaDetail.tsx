@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { IdeaWithInterests, InterestType } from '@/types';
-import { Card, CardBody, Badge, Button, Modal } from '../ui';
+import { Card, CardBody, Badge, Button, Modal, Avatar } from '../ui';
 import { InterestButton } from './InterestButton';
 import { InterestList } from './InterestList';
 import { IdeaOpportunities } from './IdeaOpportunities';
@@ -133,8 +133,11 @@ export function IdeaDetail({ idea: initialIdea, currentUserId }: IdeaDetailProps
         
         <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-gray-100 mb-4 bg-gradient-to-r from-violet-600 to-purple-600 dark:from-violet-400 dark:to-purple-400 bg-clip-text text-transparent">{idea.title}</h1>
         
-        <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-6">
-          <span>Por {idea.authorName} • {idea.authorRole}</span>
+        <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-6">
+          <div className="flex items-center gap-2">
+            <Avatar name={idea.authorName} src={idea.authorAvatarUrl} size="sm" />
+            <span>Por <span className="font-medium text-gray-900 dark:text-gray-100">{idea.authorName}</span> • {idea.authorRole}</span>
+          </div>
           <span>•</span>
           <span>Publicado em {formatDate(idea.publishedAt)}</span>
           <span>•</span>

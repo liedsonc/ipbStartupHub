@@ -1,0 +1,130 @@
+
+> startup-hub-ipb@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ✓ Ready in 2.1s
+ ○ Compiling /browse ...
+ ✓ Compiled /browse in 5.9s (571 modules)
+ ✓ Compiled in 639ms (290 modules)
+ GET /browse 200 in 6555ms
+ ○ Compiling /src/middleware ...
+ ✓ Compiled /people in 9.1s (960 modules)
+ ⨯ PrismaClientConstructorValidationError: Using engine type "client" requires either "adapter" or "accelerateUrl" to be provided to PrismaClient constructor.
+Read more at https://pris.ly/d/client-constructor
+    at getPrismaClient (./src/lib/db/prisma.ts:25:20)
+    at eval (./src/lib/db/prisma.ts:31:16)
+    at (rsc)/./src/lib/db/prisma.ts (/app/.next/server/app/people/page.js:567:1)
+    at __webpack_require__ (/app/.next/server/webpack-runtime.js:33:42)
+    at eval (./src/lib/api/server-people.ts:5:72)
+    at (rsc)/./src/lib/api/server-people.ts (/app/.next/server/app/people/page.js:556:1)
+    at __webpack_require__ (/app/.next/server/webpack-runtime.js:33:42)
+    at eval (./src/app/people/page.tsx:8:80)
+    at (rsc)/./src/app/people/page.tsx (/app/.next/server/app/people/page.js:337:1)
+    at Function.__webpack_require__ (/app/.next/server/webpack-runtime.js:33:42)
+    at async Promise.all (index 0)
+    at async Promise.all (index 0)
+digest: "4248521035"
+ ⨯ PrismaClientConstructorValidationError: Using engine type "client" requires either "adapter" or "accelerateUrl" to be provided to PrismaClient constructor.
+Read more at https://pris.ly/d/client-constructor
+    at getPrismaClient (./src/lib/db/prisma.ts:25:20)
+    at eval (./src/lib/db/prisma.ts:31:16)
+    at (rsc)/./src/lib/db/prisma.ts (/app/.next/server/app/people/page.js:567:1)
+    at __webpack_require__ (/app/.next/server/webpack-runtime.js:33:42)
+    at eval (./src/lib/api/server-people.ts:5:72)
+    at (rsc)/./src/lib/api/server-people.ts (/app/.next/server/app/people/page.js:556:1)
+    at __webpack_require__ (/app/.next/server/webpack-runtime.js:33:42)
+    at eval (./src/app/people/page.tsx:8:80)
+    at (rsc)/./src/app/people/page.tsx (/app/.next/server/app/people/page.js:337:1)
+    at Function.__webpack_require__ (/app/.next/server/webpack-runtime.js:33:42)
+    at async Promise.all (index 0)
+    at async Promise.all (index 0)
+digest: "4248521035"
+PrismaClientConstructorValidationError: Using engine type "client" requires either "adapter" or "accelerateUrl" to be provided to PrismaClient constructor.
+Read more at https://pris.ly/d/client-constructor
+    at kd (/app/node_modules/@prisma/client/runtime/client.js:66:3615)
+    at al (/app/node_modules/@prisma/client/runtime/client.js:66:3916)
+    at new t (/app/node_modules/@prisma/client/runtime/client.js:70:1241)
+    at getPrismaClient (webpack-internal:///(rsc)/./src/lib/db/prisma.ts:25:20)
+    at eval (webpack-internal:///(rsc)/./src/lib/db/prisma.ts:31:16)
+    at (rsc)/./src/lib/db/prisma.ts (/app/.next/server/app/people/page.js:567:1)
+    at __webpack_require__ (/app/.next/server/webpack-runtime.js:33:42)
+    at eval (webpack-internal:///(rsc)/./src/lib/api/server-people.ts:5:72)
+    at (rsc)/./src/lib/api/server-people.ts (/app/.next/server/app/people/page.js:556:1)
+    at __webpack_require__ (/app/.next/server/webpack-runtime.js:33:42)
+    at eval (webpack-internal:///(rsc)/./src/app/people/page.tsx:8:80)
+    at (rsc)/./src/app/people/page.tsx (/app/.next/server/app/people/page.js:337:1)
+    at Function.__webpack_require__ (/app/.next/server/webpack-runtime.js:33:42)
+    at async e7 (/app/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:398716)
+    at async tS (/app/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:402230)
+    at async tw (/app/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:402791)
+    at async tw (/app/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:402922)
+    at async tw (/app/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:402922)
+    at async tO (/app/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:36:2320)
+    at async /app/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:36:2989 {
+  digest: '302377574'
+}
+ ⨯ PrismaClientConstructorValidationError: Using engine type "client" requires either "adapter" or "accelerateUrl" to be provided to PrismaClient constructor.
+Read more at https://pris.ly/d/client-constructor
+    at getPrismaClient (./src/lib/db/prisma.ts:25:20)
+    at eval (./src/lib/db/prisma.ts:31:16)
+    at (rsc)/./src/lib/db/prisma.ts (/app/.next/server/app/people/page.js:567:1)
+    at __webpack_require__ (/app/.next/server/webpack-runtime.js:33:42)
+    at eval (./src/lib/api/server-people.ts:5:72)
+    at (rsc)/./src/lib/api/server-people.ts (/app/.next/server/app/people/page.js:556:1)
+    at __webpack_require__ (/app/.next/server/webpack-runtime.js:33:42)
+    at eval (./src/app/people/page.tsx:8:80)
+    at (rsc)/./src/app/people/page.tsx (/app/.next/server/app/people/page.js:337:1)
+    at Function.__webpack_require__ (/app/.next/server/webpack-runtime.js:33:42)
+digest: "302377574"
+ ⨯ PrismaClientConstructorValidationError: Using engine type "client" requires either "adapter" or "accelerateUrl" to be provided to PrismaClient constructor.
+Read more at https://pris.ly/d/client-constructor
+    at kd (/app/node_modules/@prisma/client/runtime/client.js:66:3615)
+    at al (/app/node_modules/@prisma/client/runtime/client.js:66:3916)
+    at new t (/app/node_modules/@prisma/client/runtime/client.js:70:1241)
+    at getPrismaClient (webpack-internal:///(rsc)/./src/lib/db/prisma.ts:25:20)
+    at eval (webpack-internal:///(rsc)/./src/lib/db/prisma.ts:31:16)
+    at (rsc)/./src/lib/db/prisma.ts (/app/.next/server/app/people/page.js:567:1)
+    at __webpack_require__ (/app/.next/server/webpack-runtime.js:33:42)
+    at eval (webpack-internal:///(rsc)/./src/lib/api/server-people.ts:5:72)
+    at (rsc)/./src/lib/api/server-people.ts (/app/.next/server/app/people/page.js:556:1)
+    at __webpack_require__ (/app/.next/server/webpack-runtime.js:33:42)
+    at eval (webpack-internal:///(rsc)/./src/app/people/page.tsx:8:80)
+    at (rsc)/./src/app/people/page.tsx (/app/.next/server/app/people/page.js:337:1)
+    at Function.__webpack_require__ (/app/.next/server/webpack-runtime.js:33:42)
+    at async e7 (/app/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:398716)
+    at async tS (/app/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:402230)
+    at async tw (/app/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:402791)
+    at async tw (/app/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:402922)
+    at async tw (/app/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:402922)
+    at async tO (/app/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:36:2320)
+    at async /app/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:36:2989 {
+  digest: '302377574',
+  page: '/people'
+}
+ GET /api/auth/session 200 in 9886ms
+ ○ Compiling /api/ideas ...
+ GET /api/auth/session 200 in 543ms
+ GET /api/auth/session 200 in 426ms
+ GET /api/auth/session 200 in 731ms
+ ✓ Compiled /api/ideas in 2.8s (968 modules)
+ GET /people 500 in 11009ms
+ GET /api/ideas?sortBy=newest 200 in 3327ms
+Error fetching ideas: PrismaClientConstructorValidationError: Using engine type "client" requires either "adapter" or "accelerateUrl" to be provided to PrismaClient constructor.
+Read more at https://pris.ly/d/client-constructor
+    at kd (/app/node_modules/@prisma/client/runtime/client.js:66:3615)
+    at al (/app/node_modules/@prisma/client/runtime/client.js:66:3916)
+    at new t (/app/node_modules/@prisma/client/runtime/client.js:70:1241)
+    at getPrismaClient (webpack-internal:///(rsc)/./src/lib/db/prisma.ts:25:20)
+    at eval (webpack-internal:///(rsc)/./src/lib/db/prisma.ts:31:16)
+    at (rsc)/./src/lib/db/prisma.ts (/app/.next/server/_rsc_src_lib_db_prisma_ts.js:20:1)
+    at Function.__webpack_require__ (/app/.next/server/webpack-runtime.js:33:42)
+    at async GET (webpack-internal:///(rsc)/./src/app/api/ideas/route.ts:19:28)
+    at async /app/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:57228
+    at async eT.execute (/app/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:46851)
+    at async eT.handle (/app/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:58760)
+    at async doRender (/app/node_modules/next/dist/server/base-server.js:1366:42)
+    at async cacheEntry.responseCache.get.routeKind (/app/node_modules/next/dist/server/base-server.js:1588:28)
