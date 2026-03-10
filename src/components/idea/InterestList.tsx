@@ -1,5 +1,5 @@
 import { PersonWithInterest, InterestType } from '@/types';
-import { Badge } from '../ui/Badge';
+import { Badge, Avatar } from '../ui';
 import { OpportunitiesList } from '../person/OpportunitiesList';
 
 interface InterestListProps {
@@ -48,7 +48,9 @@ export function InterestList({ people }: InterestListProps) {
           key={person.id}
           className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-violet-300 dark:hover:border-violet-700 hover:shadow-md transition-all duration-200"
         >
-          <div className="flex-1">
+          <div className="flex items-center gap-4 flex-1">
+            <Avatar name={person.name} src={person.avatarUrl} size="md" />
+            <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
               <span className="font-medium text-gray-900 dark:text-gray-100">{person.name}</span>
               <Badge variant={roleColors[person.role] || 'default'}>
@@ -63,6 +65,7 @@ export function InterestList({ people }: InterestListProps) {
               offering={person.opportunitiesOffering}
               seeking={person.opportunitiesSeeking}
             />
+            </div>
           </div>
           <div className="ml-4">
             <Badge variant="default" className="text-xs border border-gray-300 dark:border-gray-600">

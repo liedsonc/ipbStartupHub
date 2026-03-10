@@ -84,6 +84,7 @@ export interface Idea {
   publishedAt: string;
   authorName: string;
   authorRole: string;
+  authorAvatarUrl?: string;
   tags: string[];
   interestCount: number;
   interestedPersonIds: string[];

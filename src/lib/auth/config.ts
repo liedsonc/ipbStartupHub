@@ -29,6 +29,7 @@ export const authOptions: NextAuthConfig = {
             email: true,
             name: true,
             role: true,
+            avatarUrl: true,
             passwordHash: true,
             emailVerified: true,
             deletedAt: true
@@ -55,6 +56,7 @@ export const authOptions: NextAuthConfig = {
           email: user.email,
           name: user.name,
           role: user.role,
+          image: user.avatarUrl,
           emailVerified: user.emailVerified
         }
       }
@@ -70,11 +72,16 @@ export const authOptions: NextAuthConfig = {
     error: '/login'
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id
         token.role = user.role
         token.emailVerified = user.emailVerified
+        token.picture = user.image
+      }
+      if (trigger === 'update' && session) {
+        if (session.name) token.name = session.name;
+        if (session.image) token.picture = session.image;
       }
       return token
     },
