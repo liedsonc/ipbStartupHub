@@ -8,6 +8,7 @@ declare module 'next-auth' {
       email: string
       name: string
       role: Role
+      image?: string | null
       emailVerified: boolean
     }
   }
@@ -17,6 +18,7 @@ declare module 'next-auth' {
     email: string
     name: string
     role: Role
+    image?: string | null
     emailVerified: boolean
   }
 }
