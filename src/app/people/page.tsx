@@ -1,6 +1,6 @@
 import { fetchPeopleServer } from '@/lib/api/server-people';
 import { PersonRole, InterestType } from '@/types';
-import { Card, CardBody, Badge } from '@/components/ui';
+import { Card, CardBody, Badge, Avatar } from '@/components/ui';
 import { EmptyState } from '@/components/shared/EmptyState';
 import { OpportunitiesList } from '@/components/person/OpportunitiesList';
 
@@ -77,13 +77,16 @@ export default async function PeoplePage() {
                   <Card key={person.id}>
                     <CardBody>
                       <div className="flex items-start justify-between mb-3">
-                        <div className="flex-1">
-                          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">
-                            {person.name}
-                          </h3>
-                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                            {person.affiliation}
-                          </p>
+                        <div className="flex items-center gap-3 flex-1">
+                          <Avatar name={person.name} src={person.avatarUrl} size="md" />
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-0">
+                              {person.name}
+                            </h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              {person.affiliation}
+                            </p>
+                          </div>
                         </div>
                         <Badge variant={roleColors[person.role]}>
                           {roleLabels[person.role] || person.role}

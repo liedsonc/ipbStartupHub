@@ -6,6 +6,7 @@ import { useSession, signOut } from 'next-auth/react';
 import { Button } from '../ui/Button';
 import { useInbox } from '@/lib/hooks/useInbox';
 import { ThemeToggle } from '@/components/shared/ThemeToggle';
+import { Avatar } from '@/components/ui';
 
 export function Header() {
   const { data: session } = useSession();
@@ -69,8 +70,9 @@ export function Header() {
                 >
                   Enviar Ideia
                 </Button>
-                <Link href="/profile">
-                  <span className="text-gray-700 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-400 text-sm font-medium">
+                <Link href="/profile" className="flex items-center gap-2 group/avatar">
+                  <Avatar name={session.user.name || ''} src={session.user.image} size="sm" />
+                  <span className="hidden sm:inline text-gray-700 dark:text-gray-300 group-hover/avatar:text-violet-600 dark:group-hover/avatar:text-violet-400 text-sm font-medium">
                     {session.user.name}
                   </span>
                 </Link>

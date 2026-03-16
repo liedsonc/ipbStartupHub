@@ -2,6 +2,7 @@ import { getCurrentUser } from '@/lib/auth/session'
 import { redirect } from 'next/navigation'
 import { Card, CardBody, CardHeader } from '@/components/ui/Card'
 import { DeleteAccountSection } from '@/components/profile/DeleteAccountSection'
+import { EditProfileForm } from '@/components/profile/EditProfileForm'
 
 export const dynamic = 'force-dynamic'
 
@@ -41,34 +42,19 @@ export default async function ProfilePage() {
       <div className="space-y-6">
         <Card>
           <CardHeader>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Informações Pessoais</h2>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Informações do Perfil</h2>
           </CardHeader>
           <CardBody>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nome</label>
-                <p className="text-gray-900 dark:text-gray-100">{dbUser.name}</p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
-                <p className="text-gray-900 dark:text-gray-100">{dbUser.email}</p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Perfil</label>
-                <p className="text-gray-900 dark:text-gray-100">{dbUser.role}</p>
-              </div>
-              {dbUser.affiliation && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Afiliação</label>
-                  <p className="text-gray-900 dark:text-gray-100">{dbUser.affiliation}</p>
-                </div>
-              )}
-              {dbUser.bio && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Biografia</label>
-                  <p className="text-gray-900 dark:text-gray-100">{dbUser.bio}</p>
-                </div>
-              )}
+            <EditProfileForm user={{
+              name: dbUser.name,
+              email: dbUser.email,
+              affiliation: dbUser.affiliation,
+              bio: dbUser.bio,
+              avatarUrl: dbUser.avatarUrl
+            }} />
+            <div className="mt-6 pt-6 border-t border-gray-100 dark:border-gray-800">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tipo de Conta</label>
+              <p className="text-gray-900 dark:text-gray-100">{dbUser.role}</p>
             </div>
           </CardBody>
         </Card>
